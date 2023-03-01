@@ -9,8 +9,8 @@ import getSubnetMask from "../util/getSubnetMask";
 
 export default function CIDRPage() {
 
-  const [ip, setIP] = useState<string>('');
-  const [prefix, setPrefix] = useState<string>('');
+  const [ip, setIP] = useState<string>('10.0.0.0');
+  const [prefix, setPrefix] = useState<string>('24');
 
   return (
     <Layout>
@@ -42,6 +42,7 @@ export default function CIDRPage() {
               <Alert variant='success' className='mt-3'>
                 '{ip}/{prefix}'はCIDR表記として有効です。
               </Alert>
+              <hr />
               <Table striped bordered hover className='mt-3'>
                 <tbody>
                   <tr>
@@ -82,14 +83,13 @@ export default function CIDRPage() {
                   </tr>
                   <tr>
                     <th>IPアドレス範囲(END)</th>
-                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd}</td>
+                    <td>{getCIDRRanges("10.0.0.0", 24).ipAddressEnd}</td>
                   </tr>
                 </tbody>
               </Table>
             </>
           )
         }
-        <hr />
       </div>
     </Layout>
   );
