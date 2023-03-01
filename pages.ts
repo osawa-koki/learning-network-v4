@@ -7,8 +7,8 @@ const pages = [
   },
   {
     emoji: "📖",
-    path: "/about/",
-    name: "About",
+    path: "/cidr/",
+    name: "CIDR Range",
   },
   {
     emoji: "💓",
