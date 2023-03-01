@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import Layout from "../components/Layout";
 import getCIDRRanges from "../util/getCIDRRanges";
+import isValidIPv4 from "../util/isValidIPv4";
+import isValidPrefix from "../util/isValidPrefix";
 
 export default function CIDRPage() {
 
@@ -17,6 +19,24 @@ export default function CIDRPage() {
           <div className='px-3'>/</div>
           <Form.Control type="number" placeholder='24' value={prefix} onInput={(e) => {setPrefix((e.target as HTMLInputElement).value)}} className='prefix' />
         </div>
+        {
+          (isValidIPv4(ip) === false || isValidPrefix(prefix) === false) && (
+            <Alert variant='danger' className='mt-3'>
+              <ul>
+                {
+                  isValidIPv4(ip) === false && (
+                    <li>IPアドレスが不正です。</li>
+                  )
+                }
+                {
+                  isValidPrefix(prefix) === false && (
+                    <li>プレフィックスが不正です。</li>
+                  )
+                }
+              </ul>
+            </Alert>
+          )
+        }
         <hr />
       </div>
     </Layout>
