@@ -36,9 +36,11 @@ export default function CIDRPage() {
               </ul>
             </Alert>
           ) : (
-            <Alert variant='success' className='mt-3'>
-              '{ip}/{prefix}'はCIDR表記として有効です。
-            </Alert>
+            <>
+              <Alert variant='success' className='mt-3'>
+                '{ip}/{prefix}'はCIDR表記として有効です。
+              </Alert>
+            </>
           )
         }
         <hr />
