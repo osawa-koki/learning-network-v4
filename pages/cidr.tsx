@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Alert, Form } from 'react-bootstrap';
+import { Alert, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 import getCIDRRanges from "../util/getCIDRRanges";
 import isValidIPv4 from "../util/isValidIPv4";
 import isValidPrefix from "../util/isValidPrefix";
+import getIPAddressBits from "../util/getIPAddressBits";
+import getSubnetMask from "../util/getSubnetMask";
 
 export default function CIDRPage() {
 
@@ -40,6 +42,50 @@ export default function CIDRPage() {
               <Alert variant='success' className='mt-3'>
                 '{ip}/{prefix}'はCIDR表記として有効です。
               </Alert>
+              <Table striped bordered hover className='mt-3'>
+                <tbody>
+                  <tr>
+                    <th>CIDR</th>
+                    <td>{ip}/{prefix}</td>
+                  </tr>
+                  <tr>
+                    <th>IPアドレス</th>
+                    <td>{ip}</td>
+                  </tr>
+                  <tr>
+                    <th>IPアドレス(ビット表記)</th>
+                    <td>{getIPAddressBits(ip)}</td>
+                  </tr>
+                  <tr>
+                    <th>プレフィックス</th>
+                    <td>{prefix}</td>
+                  </tr>
+                  <tr>
+                    <th>サブネットマスク</th>
+                    <td>{getSubnetMask(parseInt(prefix))}</td>
+                  </tr>
+                  <tr>
+                    <th>サブネットマスク(ビット表記)</th>
+                    <td>{getIPAddressBits(getSubnetMask(parseInt(prefix)))}</td>
+                  </tr>
+                  <tr>
+                    <th>ネットワークアドレス</th>
+                    <td>{getCIDRRanges(ip, parseInt(prefix)).networkAddress}</td>
+                  </tr>
+                  <tr>
+                    <th>ブロードキャストアドレス</th>
+                    <td>{getCIDRRanges(ip, parseInt(prefix)).broadcastAddress}</td>
+                  </tr>
+                  <tr>
+                    <th>IPアドレス範囲(FROM)</th>
+                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressStart}</td>
+                  </tr>
+                  <tr>
+                    <th>IPアドレス範囲(END)</th>
+                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd}</td>
+                  </tr>
+                </tbody>
+              </Table>
             </>
           )
         }
