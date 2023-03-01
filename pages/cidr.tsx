@@ -20,7 +20,7 @@ export default function CIDRPage() {
           <Form.Control type="number" placeholder='24' value={prefix} onInput={(e) => {setPrefix((e.target as HTMLInputElement).value)}} className='prefix' />
         </div>
         {
-          (isValidIPv4(ip) === false || isValidPrefix(prefix) === false) && (
+          (isValidIPv4(ip) === false || isValidPrefix(prefix) === false) ? (
             <Alert variant='danger' className='mt-3'>
               <ul>
                 {
@@ -34,6 +34,10 @@ export default function CIDRPage() {
                   )
                 }
               </ul>
+            </Alert>
+          ) : (
+            <Alert variant='success' className='mt-3'>
+              '{ip}/{prefix}'はCIDR表記として有効です。
             </Alert>
           )
         }
