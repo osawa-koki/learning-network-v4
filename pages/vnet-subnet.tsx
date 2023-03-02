@@ -61,7 +61,7 @@ export default function VNetSubnetPage() {
     }
     // サブネットプレフィックスが妥当か判断
     if (isValidPrefix(subnet_prefix) === false) {
-      error = 'プレフィックスの形式が不正です。';
+      error = 'プレフィックスの値が不正です。';
     }
     // サブネットが仮想ネットワークに含まれているか判断
     // サブネットが他のサブネットと重複していないか判断
