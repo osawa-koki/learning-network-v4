@@ -161,7 +161,7 @@ export default function VNetSubnetPage() {
         <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
         {
           subnets.filter(subnet => subnet.ip !== getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress).map(subnet => (
-            isValidIPv4(subnet.ip) || isValidPrefix(subnet.prefix) &&
+            isValidIPv4(subnet.ip) && isValidPrefix(subnet.prefix) &&
             <Alert variant="info" className="mt-3">
               '#{subnet.id}'は、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'を使用することをお勧めします。
               <hr />
