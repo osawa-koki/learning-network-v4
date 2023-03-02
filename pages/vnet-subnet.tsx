@@ -94,7 +94,7 @@ export default function VNetSubnetPage() {
             ))}
           </tbody>
         </Table>
-        <Button variant="primary" onClick={Add}>Add</Button>
+        <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
       </div>
     </Layout>
   );
