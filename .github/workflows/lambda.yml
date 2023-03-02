@@ -40,9 +40,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - run: echo -n ${{ secrets.SAMCONFIG_TOML }} | base64 --decode > samconfig.toml
         working-directory: ${{ env.api_dir }}
-      - run: cat samconfig.toml
-        working-directory: ${{ env.api_dir }}
+      # - run: cat samconfig.toml
+      #   working-directory: ${{ env.api_dir }}
       - run: sam build --use-container
         working-directory: ${{ env.api_dir }}
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --resolve-image-repos
         working-directory: ${{ env.api_dir }}
