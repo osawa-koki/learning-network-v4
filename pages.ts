@@ -20,6 +20,11 @@ const pages = [
     path: "/contact/",
     name: "Contact",
   },
+  {
+    emoji: "📝",
+    path: "/else/",
+    name: "Else",
+  },
 ];
 
 export default pages;
