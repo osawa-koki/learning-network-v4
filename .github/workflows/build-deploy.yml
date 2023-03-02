@@ -2,11 +2,11 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Build and Deploy
+name: Build and Deploy Next.js site to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: ["Test Next.js site", "Deploy Lambda project"]
     types:
       - completed
 
@@ -70,6 +70,9 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Generating .env.local
+        run: |
+          echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} build
       - name: Upload artifact

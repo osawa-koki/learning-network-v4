@@ -1,0 +1,30 @@
+name: Deploy Lambda project
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  api_dir: ./api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+      - uses: aws-actions/setup-sam@v2
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: echo -n ${{ secrets.SAMCONFIG_TOML }} | base64 --decode > samconfig.toml
+        working-directory: ${{ env.api_dir }}
+      - run: cat samconfig.toml
+        working-directory: ${{ env.api_dir }}
+      - run: sam build --use-container
+        working-directory: ${{ env.api_dir }}
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        working-directory: ${{ env.api_dir }}
