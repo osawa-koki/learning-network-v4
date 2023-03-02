@@ -31,3 +31,4 @@ function addOneToBitString(str: string): string {
 }
 
 export default getNextSubnetIp;
+export { addOneToBitString };
