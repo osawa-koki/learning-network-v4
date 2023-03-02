@@ -111,7 +111,7 @@ export default function VNetSubnetPage() {
           )
         }
         <hr />
-        <Table striped bordered hover size="sm" className="mt-3">
+        <Table striped bordered hover size="sm" id="Subnet" className="mt-3">
           <thead className="text-center">
             <tr>
               <th>#</th>
@@ -123,7 +123,7 @@ export default function VNetSubnetPage() {
           <tbody>
             {subnets.map((subnet, _) => (
               <tr key={subnet.id}>
-                <td>{subnet.id}</td>
+                <th>{subnet.id}</th>
                 <td className="d-flex justify-content-center align-items-center">
                   <Form.Control type="text" value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
                   <div className='px-3'>/</div>
@@ -135,7 +135,7 @@ export default function VNetSubnetPage() {
                   }
                 </td>
                 <td>
-                  <Button variant="secondary" onClick={Delete(subnet.id)}>削除</Button>
+                  <Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button>
                 </td>
               </tr>
             ))}

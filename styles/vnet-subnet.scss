@@ -8,4 +8,12 @@
       width: 5rem;
     }
   }
+  #Subnet {
+    .ip {
+      width: 80%;
+    }
+    .prefix {
+      width: 10%;
+    }
+  }
 }
