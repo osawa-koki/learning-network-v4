@@ -26,37 +26,30 @@ export default function YourInfoPage() {
   const [as, setAs] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      fetch(`${Setting.apiPath}/your-info`)
-      .then(response => response.json())
-      .then((data: any) => {
-        console.log(data);
-        const ip_api_data = data['ip-api'];
-        setIp(ip_api_data.query);
-        setCountry(ip_api_data.country);
-        setCountryCode(ip_api_data.countryCode);
-        setRegion(ip_api_data.region);
-        setRegionName(ip_api_data.regionName);
-        setCity(ip_api_data.city);
-        setZip(ip_api_data.zip);
-        setLat(ip_api_data.lat);
-        setLon(ip_api_data.lon);
-        setTimezone(ip_api_data.timezone);
-        setIsp(ip_api_data.isp);
-        setOrg(ip_api_data.org);
-        setAs(ip_api_data.as);
-        setFetched('fetched');
-      })
-      .catch(error => {
-        console.error(error);
-        setError(error);
-        setFetched('error');
-      });
-    } catch (error) {
+    await fetch(`${Setting.apiPath}/your-info`)
+    .then(response => response.json())
+    .then((data: any) => {
+      const ip_api_data = data['ip-api'];
+      setIp(ip_api_data.query);
+      setCountry(ip_api_data.country);
+      setCountryCode(ip_api_data.countryCode);
+      setRegion(ip_api_data.region);
+      setRegionName(ip_api_data.regionName);
+      setCity(ip_api_data.city);
+      setZip(ip_api_data.zip);
+      setLat(ip_api_data.lat);
+      setLon(ip_api_data.lon);
+      setTimezone(ip_api_data.timezone);
+      setIsp(ip_api_data.isp);
+      setOrg(ip_api_data.org);
+      setAs(ip_api_data.as);
+      setFetched('fetched');
+    })
+    .catch(error => {
       console.error(error);
       setError(error);
       setFetched('error');
-    }
+    });
   }, []);
 
   return (
