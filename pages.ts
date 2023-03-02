@@ -6,6 +6,11 @@ const pages = [
     name: "Home",
   },
   {
+    emoji: "📡",
+    path: "/your-info/",
+    name: "Your Info",
+  },
+  {
     emoji: "📖",
     path: "/cidr/",
     name: "CIDR Range",

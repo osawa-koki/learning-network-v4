@@ -4,8 +4,8 @@ import '../styles/styles.scss';
 import '../styles/menu.scss';
 
 import '../styles/index.scss';
+import '../styles/your-info.scss';
 import '../styles/cidr.scss';
-import '../styles/contact.scss';
 
 import Head from 'next/head';
 
