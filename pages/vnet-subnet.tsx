@@ -21,7 +21,7 @@ export default function VNetSubnetPage() {
   ]);
 
   const PutSubnet = (id: string, e: any, type: 'vnet' | 'subnet') => {
-    const value = (e.target as any).value;
+    const value = e.target.value;
     const subnet = subnets.find((s) => s.id === id);
     if (subnet) {
       if (type === 'vnet') {
