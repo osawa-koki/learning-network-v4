@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  nextjs-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,3 +43,5 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Test
         run: ${{ steps.detect-package-manager.outputs.runner }} test
+    outputs:
+      test-status: ${{ job.status }}

@@ -24,6 +24,8 @@ concurrency:
 jobs:
   # Build job
   nextjs-build:
+    needs: nextjs-test
+    if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
