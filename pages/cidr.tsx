@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Form, Table } from 'react-bootstrap';
+import { Alert, Button, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 import getCIDRRanges from "../util/getIpDetails";
 import isValidIPv4 from "../util/isValidIPv4";
@@ -46,6 +46,8 @@ export default function CIDRPage() {
                     <>
                       <hr />
                       これは、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'と同じ範囲を表しています。<br />代わりに、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'を使用することをお勧めします。
+                      <hr />
+                      <Button variant='info' onClick={() => setIP(getCIDRRanges(ip, parseInt(prefix)).networkAddress)} size="sm">Set to {getCIDRRanges(ip, parseInt(prefix)).networkAddress}</Button>
                     </>
                   )
                 }
