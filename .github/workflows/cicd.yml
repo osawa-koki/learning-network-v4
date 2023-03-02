@@ -86,11 +86,10 @@ jobs:
             echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
-      - name: Set output
-        id: output
-        run: echo "::set-output name=url::${{ env.API_GATEWAY_URL }}"
+      - id: step1
+        run: echo "test=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
     outputs:
-      api_gateway_url: ${{ steps.output.outputs.url }}
+      output1: ${{ steps.step1.outputs.test }}
   nextjs-test:
     # needs: lambda-deploy
     runs-on: ubuntu-latest
@@ -147,28 +146,30 @@ jobs:
       #   run: |
       #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Show API Gateway URL
+        env:
+          OUTPUT1: ${{needs.job1.outputs.output1}}
         run: |
-          echo "api_gateway_url -> ${{ needs.lambda-deploy.outputs.api_gateway_url }}"
+          echo "api_gateway_url -> $OUTPUT1"
       - name: Check status code of curl response
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.lambda-deploy.outputs.api_gateway_url }}/your-info")
+          response=$(curl -s -o /dev/null -w "%{http_code}" "$OUTPUT1/your-info")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
             echo "Failed"
             echo "Response code: $response"
-            echo "API Gateway URL: ${{ needs.lambda-deploy.outputs.api_gateway_url }}"
+            echo "API Gateway URL: $OUTPUT1"
             exit 1
           fi
       - name: Set API Gateway URL
         run: |
-          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ needs.lambda-deploy.outputs.api_gateway_url }}$\n" >> .env.local
+          echo "NEXT_PUBLIC_LAMBDA_API_URL=$OUTPUT1$\n" >> .env.local
       - name: Cat .env.local
         run: |
           cat .env.local
       - name: Set API Gateway URL
         run: |
-          echo "${{ needs.lambda-deploy.outputs.api_gateway_url }}$\n" >> .env.local
+          echo "$OUTPUT1$\n" >> .env.local
       - name: Build with Next.js
         run: yarn build
       - name: Upload artifact
