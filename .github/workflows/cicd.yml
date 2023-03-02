@@ -41,8 +41,6 @@ jobs:
     needs: lambda-test
     if: ${{ needs.lambda-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
-    outputs:
-      api_gateway_url: ${{ steps.output.outputs.url }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -91,8 +89,10 @@ jobs:
       - name: Set output
         id: output
         run: echo "::set-output name=url::${{ env.API_GATEWAY_URL }}"
+    outputs:
+      api_gateway_url: ${{ steps.output.outputs.url }}
   nextjs-test:
-    needs: lambda-deploy
+    # needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -110,7 +110,9 @@ jobs:
       test-status: ${{ job.status }}
   # Build job
   nextjs-build:
-    needs: nextjs-test
+    needs:
+      - lambda-deploy
+      - nextjs-test
     if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
@@ -146,7 +148,7 @@ jobs:
       #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Show API Gateway URL
         run: |
-          echo ${{ needs.lambda-deploy.outputs.api_gateway_url }}
+          echo "api_gateway_url -> ${{ needs.lambda-deploy.outputs.api_gateway_url }}"
       - name: Check status code of curl response
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.lambda-deploy.outputs.api_gateway_url }}/your-info")
