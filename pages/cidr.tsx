@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Alert, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
-import getCIDRRanges from "../util/getCIDRRanges";
+import getCIDRRanges from "../util/getIpDetails";
 import isValidIPv4 from "../util/isValidIPv4";
 import isValidPrefix from "../util/isValidPrefix";
 import getIPAddressBits from "../util/getIPAddressBits";
