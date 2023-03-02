@@ -39,7 +39,7 @@ export default function CIDRPage() {
             </Alert>
           ) : (
             <>
-              <Alert variant='success' className='mt-3'>
+              <Alert variant='info' className='mt-3'>
                 '{ip}/{prefix}'はCIDR表記として有効です。
               </Alert>
               <hr />
