@@ -137,19 +137,19 @@ export default function VNetSubnetPage() {
           <tbody>
             {subnets.map((subnet, _) => (
               <tr key={subnet.id}>
-                <th className="position-relative"><div className="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center">{subnet.id}</div></th>
+                <th className="parent"><div className="child">{subnet.id}</div></th>
                 <td className="d-flex justify-content-center align-items-center">
                   <Form.Control type="text" value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
                   <div className='px-3'>/</div>
                   <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
-                <td className="position-relative">
-                  <div className="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center">
+                <td className="parent">
+                  <div className="child">
                     { ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id)) }
                   </div>
                 </td>
-                <td className="position-relative">
-                  <div className="position-absolute top-0 start-0 bottom-0 end-0 d-flex justify-content-center align-items-center"><Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button></div>
+                <td className="parent">
+                  <div className="child"><Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button></div>
                 </td>
               </tr>
             ))}
