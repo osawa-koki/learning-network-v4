@@ -14,6 +14,7 @@ Resources:
   YourInfoFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: learning-network-v4-YourInfoFunction
       PackageType: Image
       Architectures:
         - x86_64
