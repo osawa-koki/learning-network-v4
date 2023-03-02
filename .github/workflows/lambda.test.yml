@@ -9,7 +9,7 @@ env:
   api_dir: ./api/my-app
 
 jobs:
-  test:
+  lambda-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
