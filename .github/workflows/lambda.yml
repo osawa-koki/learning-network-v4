@@ -64,10 +64,6 @@ jobs:
           echo "API_GATEWAY_URL=$API_GATEWAY_URL" >> $GITHUB_ENV
       - name: Cat API Gateway URL
         run: echo $API_GATEWAY_URL
-  confirm:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
       - name: Check status code of curl response
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_GATEWAY_URL }}")
