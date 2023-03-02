@@ -82,7 +82,7 @@ export default function VNetSubnetPage() {
 
     if (error !== null) {
       return (
-        <OverlayTrigger overlay={<Tooltip>{error}</Tooltip>}>
+        <OverlayTrigger placement="right" overlay={<Tooltip>{error}</Tooltip>}>
           <div><BsFillBellFill className="d-block m-auto text-danger" /></div>
         </OverlayTrigger>
       );
