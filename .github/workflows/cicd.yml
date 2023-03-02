@@ -92,7 +92,7 @@ jobs:
         id: output
         run: echo "::set-output name=url::${{ env.API_GATEWAY_URL }}"
   nextjs-test:
-    needs: lambda-deploy
+    # needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
