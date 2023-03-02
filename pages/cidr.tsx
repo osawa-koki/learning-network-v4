@@ -41,6 +41,14 @@ export default function CIDRPage() {
             <>
               <Alert variant='info' className='mt-3'>
                 '{ip}/{prefix}'はCIDR表記として有効です。
+                {
+                  ip !== getCIDRRanges(ip, parseInt(prefix)).networkAddress && (
+                    <>
+                      <hr />
+                      これは、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'と同じ範囲を表しています。<br />代わりに、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'を使用することをお勧めします。
+                    </>
+                  )
+                }
               </Alert>
               <hr />
               <Table striped bordered hover className='mt-3'>
