@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Alert, Spinner, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
+import Setting from "../setting";
 
 type FetchingState = "fetching" | "fetched" | "error";
 
@@ -25,7 +26,7 @@ export default function YourInfoPage() {
   const [as, setAs] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://ip-api.com/json/')
+    fetch(`${Setting.apiPath}/your-info`)
       .then(response => response.json())
       .then((data: any) => {
         console.log(data);
