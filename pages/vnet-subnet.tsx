@@ -4,9 +4,12 @@ import { Alert, Button, Form, OverlayTrigger, Spinner, Table, Tooltip } from 're
 import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
+import getIpDetails from '../util/getIpDetails';
 import isValidIPv4 from '../util/isValidIPv4';
 import isValidPrefix from '../util/isValidPrefix';
 import subnetIsInVNet from '../util/subnetIsInVNet';
+import collisionChecker from '../util/collisionChecker';
+import { SubnetStruct } from '../util/collisionChecker';
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -20,7 +23,7 @@ export default function VNetSubnetPage() {
   ]);
 
   const PutSubnet = (id: string, e: any, type: 'vnet' | 'subnet') => {
-    const value = (e.target as HTMLInputElement).value;
+    const value = e.target.value;
     const subnet = subnets.find((s) => s.id === id);
     if (subnet) {
       if (type === 'vnet') {
@@ -69,6 +72,13 @@ export default function VNetSubnetPage() {
       error = 'サブネットが仮想ネットワークに含まれていません。';
     }
     // サブネットが他のサブネットと重複していないか判断
+    const collisioning_ids = collisionChecker(
+      {id: null, ip: subnet_ip, prefix: subnet_prefix} as SubnetStruct,
+      other_subnets,
+    );
+    if (collisioning_ids.length !== 0) {
+      error = `サブネットが他のサブネットと重複しています。(${collisioning_ids.map(id => `'#${id}'`).join(', ')})`;
+    }
 
     if (error !== null) {
       return (
@@ -97,21 +107,21 @@ export default function VNetSubnetPage() {
           </Form.Group>
         </Form>
         {
-          (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) && (
+          (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) ? (
             <Alert variant='danger' className='mt-3'>
               <ul>
-                {
-                  isValidIPv4(vnet_ip) === false && (
-                    <li>IPアドレスが不正です。</li>
-                  )
-                }
-                {
-                  isValidPrefix(vnet_prefix) === false && (
-                    <li>プレフィックスが不正です。</li>
-                  )
-                }
+                {isValidIPv4(vnet_ip) === false && <li>IPアドレスが不正です。</li>}
+                {isValidPrefix(vnet_prefix) === false && <li>プレフィックスが不正です。</li>}
               </ul>
             </Alert>
+          ) : (
+            vnet_ip !== getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress && (
+              <Alert variant="info" className="mt-3">
+                これは、'{getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}/{vnet_prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}/{vnet_prefix}'を使用することをお勧めします。
+                <hr />
+                <Button variant='info' onClick={() => setVNetIP(getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress)} size="sm">Set to {getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}</Button>
+              </Alert>
+            )
           )
         }
         <hr />
@@ -146,6 +156,18 @@ export default function VNetSubnetPage() {
           </tbody>
         </Table>
         <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
+        {
+          subnets.filter(subnet => subnet.ip !== getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress).map(subnet => (
+            isValidIPv4(subnet.ip) && isValidPrefix(subnet.prefix) &&
+            <Alert variant="info" className="mt-3">
+              '#{subnet.id}'は、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'を使用することをお勧めします。
+              <hr />
+              <Button variant='info' onClick={() => {
+                PutSubnet(subnet.id, { target: { value: getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress } }, 'vnet')
+              }} size="sm">Set to {getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}</Button>
+            </Alert>
+          ))
+        }
       </div>
     </Layout>
   );
