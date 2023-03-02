@@ -9,7 +9,7 @@ env:
   api_dir: ./api/my-app
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,3 +20,5 @@ jobs:
         working-directory: ${{ env.api_dir }}
       - run: npm run test
         working-directory: ${{ env.api_dir }}
+    outputs:
+      test-status: ${{ job.status }}
