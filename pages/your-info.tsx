@@ -9,7 +9,7 @@ type FetchingState = "fetching" | "fetched" | "error";
 export default function YourInfoPage() {
 
   const [fetching_state, setFetched] = useState<FetchingState>('fetching');
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const [ip, setIp] = useState<string | null>(null);
   const [country, setCountry] = useState<string | null>(null);
@@ -27,30 +27,28 @@ export default function YourInfoPage() {
 
   useEffect(() => {
     fetch(`${Setting.apiPath}/your-info`)
-      .then(response => response.json())
-      .then((data: any) => {
-        console.log(data);
-        const ip_api_data = data['ip-api'];
-        setIp(ip_api_data.query);
-        setCountry(ip_api_data.country);
-        setCountryCode(ip_api_data.countryCode);
-        setRegion(ip_api_data.region);
-        setRegionName(ip_api_data.regionName);
-        setCity(ip_api_data.city);
-        setZip(ip_api_data.zip);
-        setLat(ip_api_data.lat);
-        setLon(ip_api_data.lon);
-        setTimezone(ip_api_data.timezone);
-        setIsp(ip_api_data.isp);
-        setOrg(ip_api_data.org);
-        setAs(ip_api_data.as);
-        setFetched('fetched');
-      })
-      .catch(error => {
-        console.error(error);
-        setError(error);
-        setFetched('error');
-      });
+    .then(response => response.json())
+    .then((data: any) => {
+      const ip_api_data = data['ip-api'];
+      setIp(ip_api_data.query);
+      setCountry(ip_api_data.country);
+      setCountryCode(ip_api_data.countryCode);
+      setRegion(ip_api_data.region);
+      setRegionName(ip_api_data.regionName);
+      setCity(ip_api_data.city);
+      setZip(ip_api_data.zip);
+      setLat(ip_api_data.lat);
+      setLon(ip_api_data.lon);
+      setTimezone(ip_api_data.timezone);
+      setIsp(ip_api_data.isp);
+      setOrg(ip_api_data.org);
+      setAs(ip_api_data.as);
+      setFetched('fetched');
+    })
+    .catch(error => {
+      setError(`${error.name}: ${error.message}`);
+      setFetched('error');
+    });
   }, []);
 
   return (

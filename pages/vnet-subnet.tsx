@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { Alert, Button, Form, OverlayTrigger, Spinner, Table, Tooltip } from 'react-bootstrap';
+import { Alert, Button, Form, OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
@@ -10,8 +10,9 @@ import isValidPrefix from '../util/isValidPrefix';
 import subnetIsInVNet from '../util/subnetIsInVNet';
 import collisionChecker from '../util/collisionChecker';
 import { SubnetStruct } from '../util/collisionChecker';
+import getNextSubnetIp from "../util/getNextSubnetIp";
 
-const subnet_ids = 'ABCDE'.split('');
+const subnet_ids = 'ABCDEFGHIJKLMNO'.split('');
 
 export default function VNetSubnetPage() {
 
@@ -21,6 +22,7 @@ export default function VNetSubnetPage() {
     {id: 'A', ip: '10.0.1.0', prefix: '24'},
     {id: 'B', ip: '10.0.2.0', prefix: '24'},
   ]);
+  const [easyDelete, setEasyDelete] = useState<boolean>(false);
 
   const PutSubnet = (id: string, e: any, type: 'vnet' | 'subnet') => {
     const value = e.target.value;
@@ -38,14 +40,17 @@ export default function VNetSubnetPage() {
 
   const Add = () => {
     const id = subnet_ids.find((id) => !subnets.find((s) => s.id === id));
+    const last_subnet = subnets[subnets.length - 1];
+    const last_subnet_ip = last_subnet.ip;
+    const last_subnet_prefix = last_subnet.prefix;
     if (id) {
-      subnets.push({id, ip: '', prefix: ''});
+      subnets.push({id, ip: getNextSubnetIp(last_subnet_ip, last_subnet_prefix), prefix: last_subnet_prefix});
       setSubnets([...subnets]);
     }
   };
 
   const Delete = (id: string) => () => {
-    if (window.confirm('削除しますか？') === false) return;
+    if (easyDelete === false && window.confirm('削除しますか？') === false) return;
     const index = subnets.findIndex((s) => s.id === id);
     if (index < 0) return;
     subnets.splice(index, 1);
@@ -82,7 +87,7 @@ export default function VNetSubnetPage() {
 
     if (error !== null) {
       return (
-        <OverlayTrigger overlay={<Tooltip>{error}</Tooltip>}>
+        <OverlayTrigger placement="right" delay={{ show: 100, hide: 300 }} overlay={<Tooltip>{error}</Tooltip>}>
           <div><BsFillBellFill className="d-block m-auto text-danger" /></div>
         </OverlayTrigger>
       );
@@ -137,25 +142,33 @@ export default function VNetSubnetPage() {
           <tbody>
             {subnets.map((subnet, _) => (
               <tr key={subnet.id}>
-                <th>{subnet.id}</th>
+                <th className="parent"><div className="child">{subnet.id}</div></th>
                 <td className="d-flex justify-content-center align-items-center">
                   <Form.Control type="text" value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
                   <div className='px-3'>/</div>
                   <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
-                <td>
-                  {
-                    ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id))
-                  }
+                <td className="parent">
+                  <div className="child">
+                    { ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id)) }
+                  </div>
                 </td>
-                <td>
-                  <Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button>
+                <td className="parent">
+                  <div className="child"><Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button></div>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
         <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
+        <div className="mt-3">
+        <Form.Check
+          type="switch"
+          label="削除時に確認する"
+          checked={easyDelete === false}
+          onInput={(e) => {setEasyDelete((e.target as HTMLInputElement).checked)}}
+        />
+        </div>
         {
           subnets.filter(subnet => subnet.ip !== getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress).map(subnet => (
             isValidIPv4(subnet.ip) && isValidPrefix(subnet.prefix) &&

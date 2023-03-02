@@ -15,5 +15,16 @@
     .prefix {
       width: 10%;
     }
+    .parent {
+      position: relative;
+    }
+    .child {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
   }
 }

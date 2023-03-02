@@ -1,4 +1,14 @@
 
+/**
+ * IPアドレスの詳細情報を取得する
+ * @param ipAddress 対象のIPアドレス
+ * @param prefix プレフィックス値
+ * @returns IPアドレスの詳細情報
+ * - networkAddress: ネットワークアドレス
+ * - broadcastAddress: ブロードキャストアドレス
+ * - ipAddressStart: IPアドレス範囲の開始アドレス(ネットワークアドレスの次のアドレス)
+ * - ipAddressEnd: IPアドレス範囲の終了アドレス(ブロードキャストアドレスの前のアドレス)
+ */
 function getIpDetails(ipAddress: string, prefix: number): {
   networkAddress: string,
   broadcastAddress: string,
