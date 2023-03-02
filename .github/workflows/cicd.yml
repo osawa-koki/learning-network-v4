@@ -91,9 +91,18 @@ jobs:
     outputs:
       output1: ${{ steps.step1.outputs.test }}
   nextjs-test:
-    # needs: lambda-deploy
+    needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
+      - name: API Gateway URL empty guard
+        env:
+          OUTPUT1: ${{ needs.lambda-deploy.outputs.output1 }}
+        run: |
+          echo "API Gateway URL -> ${{ env.OUTPUT1 }}"
+          if [ -z "${{ env.OUTPUT1 }}" ]; then
+            echo "API Gateway URL is empty"
+            exit 1
+          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
@@ -115,6 +124,15 @@ jobs:
     if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
+      - name: API Gateway URL empty guard
+        env:
+          OUTPUT1: ${{ needs.lambda-deploy.outputs.output1 }}
+        run: |
+          echo "API Gateway URL -> ${{ env.OUTPUT1 }}"
+          if [ -z "${{ env.OUTPUT1 }}" ]; then
+            echo "API Gateway URL is empty"
+            exit 1
+          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
