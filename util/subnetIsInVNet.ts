@@ -1,6 +1,14 @@
 import getIpDetails from './getIpDetails';
 import getIPAddressBits from './getIPAddressBits';
 
+/**
+ * サブネットがVNetに含まれるかどうかを判定する
+ * @param subnet_ip サブネットのIPアドレス
+ * @param subnet_prefix サブネットのプレフィックス
+ * @param vnet_ip VNetのIPアドレス
+ * @param vnet_prefix VNetのプレフィックス
+ * @returns サブネットがVNetに含まれるかどうかを表す真偽値
+ */
 function subnetIsInVNet(subnet_ip: string, subnet_prefix: string, vnet_ip: string, vnet_prefix: string): boolean {
   // サブネットがVNetに含まれるかどうかを判定する
   const subnet_from = getIpDetails(subnet_ip, parseInt(subnet_prefix)).networkAddress;

@@ -7,6 +7,12 @@ type SubnetStruct = {
   prefix: string;
 };
 
+/**
+ * サブネットが衝突しているかどうかを判定する
+ * @param subnet 検査対象のサブネット
+ * @param other_subnets 他のサブネット一覧
+ * @returns 衝突しているサブネットのID一覧
+ */
 function collisionChecker(subnet: SubnetStruct, other_subnets: SubnetStruct[]): string[] {
   const collision_subnet_ids: string[] = [];
   const subnetDetails = getIpDetails(subnet.ip, parseInt(subnet.prefix));

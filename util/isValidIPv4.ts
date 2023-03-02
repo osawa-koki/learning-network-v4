@@ -1,4 +1,9 @@
 
+/**
+ * IPアドレスが有効かどうかを判定する
+ * @param ipAddress 検査対象のIPアドレス
+ * @returns IPアドレスが有効な場合はtrue、そうでない場合はfalse
+ */
 function isValidIPv4(ipAddress: string): boolean {
   const ipAddressParts = ipAddress.split(".");
   if (ipAddressParts.length !== 4) {
