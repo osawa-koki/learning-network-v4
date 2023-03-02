@@ -23,10 +23,6 @@ Resources:
           Properties:
             Path: /hello
             Method: get
-    Metadata:
-      DockerTag: nodejs18.x-v1
-      DockerContext: ./hello-world
-      Dockerfile: Dockerfile
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
