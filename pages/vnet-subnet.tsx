@@ -22,6 +22,7 @@ export default function VNetSubnetPage() {
     {id: 'A', ip: '10.0.1.0', prefix: '24'},
     {id: 'B', ip: '10.0.2.0', prefix: '24'},
   ]);
+  const [easyDelete, setEasyDelete] = useState<boolean>(false);
 
   const PutSubnet = (id: string, e: any, type: 'vnet' | 'subnet') => {
     const value = e.target.value;
@@ -49,7 +50,7 @@ export default function VNetSubnetPage() {
   };
 
   const Delete = (id: string) => () => {
-    if (window.confirm('削除しますか？') === false) return;
+    if (easyDelete === false && window.confirm('削除しますか？') === false) return;
     const index = subnets.findIndex((s) => s.id === id);
     if (index < 0) return;
     subnets.splice(index, 1);
@@ -160,6 +161,14 @@ export default function VNetSubnetPage() {
           </tbody>
         </Table>
         <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
+        <div className="mt-3">
+        <Form.Check
+          type="switch"
+          label="削除時に確認する"
+          checked={easyDelete === false}
+          onInput={(e) => {setEasyDelete((e.target as HTMLInputElement).checked)}}
+        />
+        </div>
         {
           subnets.filter(subnet => subnet.ip !== getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress).map(subnet => (
             isValidIPv4(subnet.ip) && isValidPrefix(subnet.prefix) &&
