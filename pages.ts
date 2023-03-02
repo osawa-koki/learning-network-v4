@@ -17,8 +17,8 @@ const pages = [
   },
   {
     emoji: "💓",
-    path: "/contact/",
-    name: "Contact",
+    path: "/vnet-subnet/",
+    name: "VNet Subnet",
   },
   {
     emoji: "📝",

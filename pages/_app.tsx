@@ -5,6 +5,7 @@ import '../styles/menu.scss';
 
 import '../styles/index.scss';
 import '../styles/your-info.scss';
+import '../styles/vnet-subnet.scss';
 import '../styles/cidr.scss';
 
 import Head from 'next/head';
