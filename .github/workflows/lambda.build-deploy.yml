@@ -10,7 +10,7 @@ env:
   api_dir: ./api
 
 jobs:
-  deploy:
+  lambda-deploy:
     needs: lambda-test
     if: ${{ needs.lambda-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
