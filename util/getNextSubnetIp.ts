@@ -1,8 +1,8 @@
 import getIpDetails from "./getIpDetails";
 import getIPAddressBits from "./getIPAddressBits";
 
-function getNextSubnetIp(ip, prefixLength) {
-  const { broadcastAddress } = getIpDetails(ip, prefixLength);
+function getNextSubnetIp(ip: string, prefix: string) {
+  const { broadcastAddress } = getIpDetails(ip, parseInt(prefix));
   const broadcastAddressBits = getIPAddressBits(broadcastAddress);
   const nextSubnetIpBits = addOneToBitString(broadcastAddressBits);
   const nextSubnetIp = nextSubnetIpBits.split(".").map((bit, _) => parseInt(bit, 2)).join(".");
