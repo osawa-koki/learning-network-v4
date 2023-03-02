@@ -52,14 +52,14 @@ jobs:
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --resolve-image-repos \
-            --stack-name learning-network-v4 \
+            --stack-name ${{ env.project_name }} \
             --s3-bucket ${{ env.project_name }} \
             --capabilities CAPABILITY_IAM \
           || aws s3 mb s3://${{ env.project_name }} && sam deploy \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --resolve-image-repos \
-            --stack-name learning-network-v4 \
+            --stack-name ${{ env.project_name }} \
             --s3-bucket ${{ env.project_name }} \
             --capabilities CAPABILITY_IAM
         working-directory: ${{ env.api_dir }}
