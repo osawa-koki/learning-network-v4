@@ -8,6 +8,8 @@ import getIpDetails from '../util/getIpDetails';
 import isValidIPv4 from '../util/isValidIPv4';
 import isValidPrefix from '../util/isValidPrefix';
 import subnetIsInVNet from '../util/subnetIsInVNet';
+import collisionChecker from '../util/collisionChecker';
+import { SubnetStruct } from '../util/collisionChecker';
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -70,17 +72,12 @@ export default function VNetSubnetPage() {
       error = 'サブネットが仮想ネットワークに含まれていません。';
     }
     // サブネットが他のサブネットと重複していないか判断
-    let collision_check = false;
-    let collision_ids: string[] = [];
-    other_subnets.forEach((s) => {
-      if (s.ip === subnet_ip && s.prefix === subnet_prefix) return; // 自分自身は除外
-      if (subnetIsInVNet(subnet_ip, subnet_prefix, s.ip, s.prefix)) {
-        collision_check = true;
-        collision_ids.push(s.id);
-      }
-    });
-    if (collision_check) {
-      error = `サブネットが他のサブネットと重複しています。(${collision_ids.join(', ')})`;
+    const [collisioning, collisioning_ids] = collisionChecker(
+      {id: null, ip: subnet_ip, prefix: subnet_prefix} as SubnetStruct,
+      other_subnets,
+    );
+    if (collisioning) {
+      error = `サブネットが他のサブネットと重複しています。(${collisioning_ids.map(id => `'#${id}'`).join(', ')})`;
     }
 
     if (error !== null) {
