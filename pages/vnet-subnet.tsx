@@ -79,10 +79,10 @@ export default function VNetSubnetPage() {
               <tr key={subnet.id}>
                 <td>{subnet.id}</td>
                 <td>
-                  <Form.Control type="text" placeholder='10.0.0.0' value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
+                  <Form.Control type="text" value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
                 </td>
                 <td>
-                  <Form.Control type="number" placeholder='24' value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
+                  <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
                 <td>
                   エラー
