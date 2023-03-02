@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert, Button, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
+import CIDR from "../components/CIDR";
 import getCIDRRanges from "../util/getIpDetails";
 import isValidIPv4 from "../util/isValidIPv4";
 import isValidPrefix from "../util/isValidPrefix";
@@ -97,6 +98,7 @@ export default function CIDRPage() {
                   </tr>
                 </tbody>
               </Table>
+              <CIDR cidr={`${ip}/${prefix}`} network_address={getCIDRRanges(ip, parseInt(prefix)).networkAddress} broadcast_address={getCIDRRanges(ip, parseInt(prefix)).broadcastAddress} first_address={getCIDRRanges(ip, parseInt(prefix)).ipAddressStart} last_address={getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd} />
             </>
           )
         }
