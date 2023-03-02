@@ -2,6 +2,14 @@ export {};
 
 import getIpDetails from '../util/getIpDetails';
 
+test("'10.0.0.0/8'のCIDR詳細算出関数のテスト", () => {
+  const result = getIpDetails('10.0.0.0', 8);
+  expect(result.networkAddress).toBe('10.0.0.0');
+  expect(result.broadcastAddress).toBe('10.255.255.255');
+  expect(result.ipAddressStart).toBe('10.0.0.1');
+  expect(result.ipAddressEnd).toBe('10.255.255.254');
+});
+
 test("'10.0.0.0/16'のCIDR詳細算出関数のテスト", () => {
   const result = getIpDetails('10.0.0.0', 16);
   expect(result.networkAddress).toBe('10.0.0.0');
