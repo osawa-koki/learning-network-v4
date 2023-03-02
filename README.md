@@ -41,12 +41,6 @@ sam deploy --guided
 ```
 
 本番環境へのデプロイは、`main`ブランチにマージすると自動で行われます。  
-しかしながら、ECRへの新規イメージのpushは手動で行う必要があります。  
-これは上記のコマンドを実行することで行われます。  
-
-新規の関数を登録するにはECRが必要ですが、これはローカルで上記コマンドを実行して、`samconfig.toml`を更新する必要があります。  
-新規に関数を作成して、ECRを作成した際には、`samconfig.toml`を登録しているGitHubシークレット情報を更新する必要があります。  
-GitHubシークレットの登録に関しては、後述します。  
 
 ---
 
@@ -94,5 +88,4 @@ GitHubのリポジトリのSettingsから、`Secrets`を作成します。
 | AWS_ACCESS_KEY_ID | AWSのアクセスキー |
 | AWS_SECRET_ACCESS_KEY | AWSのシークレットキー |
 | AWS_REGION | AWSのリージョン |
-| SAMCONFIG_TOML | `samconfig.toml`の内容をBASE64エンコードしたもの |
 | ENV_LOCAL | `.env.local`の内容 |
