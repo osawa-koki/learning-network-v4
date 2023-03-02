@@ -61,12 +61,12 @@ jobs:
         working-directory: ${{ env.api_dir }}
       - name: Get API Gateway URL
         run: |
-          API_GATEWAY_URL=$(aws cloudformation describe-stacks --stack-name <stack-name> --query "Stacks[0].Outputs[?OutputKey=='YourInfoApi'].OutputValue" --output text --no-cli-pager)
+          API_GATEWAY_URL=$(aws cloudformation describe-stacks --stack-name ${{ env.project_name }} --query "Stacks[0].Outputs[?OutputKey=='YourInfoApi'].OutputValue" --output text --no-cli-pager)
           echo "API_GATEWAY_URL=$API_GATEWAY_URL" >> $GITHUB_ENV
         working-directory: ${{ env.api_dir }}
       - name: Cat API Gateway URL
         run: echo $API_GATEWAY_URL
-  post-test:
+  confirm:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
