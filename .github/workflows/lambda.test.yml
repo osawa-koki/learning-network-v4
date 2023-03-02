@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  api_dir: ./app/my-app
+  api_dir: ./api/my-app
 
 jobs:
   deploy:
