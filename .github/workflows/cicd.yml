@@ -41,6 +41,8 @@ jobs:
     needs: lambda-test
     if: ${{ needs.lambda-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      api_gateway_url: ${{ steps.output.outputs.url }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -86,6 +88,9 @@ jobs:
             echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
+      - name: Set output
+        id: output
+        run: echo "::set-output name=url::${{ env.API_GATEWAY_URL }}"
   nextjs-test:
     needs: lambda-deploy
     runs-on: ubuntu-latest
@@ -141,27 +146,27 @@ jobs:
       #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Show API Gateway URL
         run: |
-          echo ${{ env.API_GATEWAY_URL }}
+          echo ${{ needs.lambda-deploy.outputs.api_gateway_url }}
       - name: Check status code of curl response
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_GATEWAY_URL }}/your-info")
+          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.lambda-deploy.outputs.api_gateway_url }}/your-info")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
             echo "Failed"
             echo "Response code: $response"
-            echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
+            echo "API Gateway URL: ${{ needs.lambda-deploy.outputs.api_gateway_url }}"
             exit 1
           fi
       - name: Set API Gateway URL
         run: |
-          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.API_GATEWAY_URL }}$\n" >> .env.local
+          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ needs.lambda-deploy.outputs.api_gateway_url }}$\n" >> .env.local
       - name: Cat .env.local
         run: |
           cat .env.local
       - name: Set API Gateway URL
         run: |
-          echo "${{ env.API_GATEWAY_URL }}$\n" >> .env.local
+          echo "${{ needs.lambda-deploy.outputs.api_gateway_url }}$\n" >> .env.local
       - name: Build with Next.js
         run: yarn build
       - name: Upload artifact
