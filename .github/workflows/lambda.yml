@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  api_dir: ./api
   app_dir: ./api/my-app
+  api_dir: ./api
 
 jobs:
   test:
