@@ -12,7 +12,7 @@ import collisionChecker from '../util/collisionChecker';
 import { SubnetStruct } from '../util/collisionChecker';
 import getNextSubnetIp from "../util/getNextSubnetIp";
 
-const subnet_ids = 'ABCDE'.split('');
+const subnet_ids = 'ABCDEFGHIJKLMNO'.split('');
 
 export default function VNetSubnetPage() {
 
