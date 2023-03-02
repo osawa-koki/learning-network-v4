@@ -1,9 +1,10 @@
 name: Deploy Lambda project
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Test Lambda"]
+    types:
+      - completed
 
 env:
   api_dir: ./api
