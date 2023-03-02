@@ -1,0 +1,19 @@
+
+#VNetSubnet {
+  #VNet {
+    .ip {
+      max-width: 15rem;
+    }
+    .prefix {
+      width: 5rem;
+    }
+  }
+  #Subnet {
+    .ip {
+      width: 80%;
+    }
+    .prefix {
+      width: 10%;
+    }
+  }
+}

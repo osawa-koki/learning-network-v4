@@ -4,8 +4,9 @@ import '../styles/styles.scss';
 import '../styles/menu.scss';
 
 import '../styles/index.scss';
-import '../styles/about.scss';
-import '../styles/contact.scss';
+import '../styles/your-info.scss';
+import '../styles/vnet-subnet.scss';
+import '../styles/cidr.scss';
 
 import Head from 'next/head';
 

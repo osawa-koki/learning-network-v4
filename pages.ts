@@ -6,14 +6,24 @@ const pages = [
     name: "Home",
   },
   {
+    emoji: "📡",
+    path: "/your-info/",
+    name: "Your Info",
+  },
+  {
     emoji: "📖",
-    path: "/about/",
-    name: "About",
+    path: "/cidr/",
+    name: "CIDR Range",
   },
   {
     emoji: "💓",
-    path: "/contact/",
-    name: "Contact",
+    path: "/vnet-subnet/",
+    name: "VNet Subnet",
+  },
+  {
+    emoji: "📝",
+    path: "/else/",
+    name: "Else",
   },
 ];
 
