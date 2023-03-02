@@ -26,16 +26,8 @@ export default function CIDRPage() {
           (isValidIPv4(ip) === false || isValidPrefix(prefix) === false) ? (
             <Alert variant='danger' className='mt-3'>
               <ul>
-                {
-                  isValidIPv4(ip) === false && (
-                    <li>IPアドレスが不正です。</li>
-                  )
-                }
-                {
-                  isValidPrefix(prefix) === false && (
-                    <li>プレフィックスが不正です。</li>
-                  )
-                }
+                { isValidIPv4(ip) === false && <li>IPアドレスが不正です。</li> }
+                { isValidPrefix(prefix) === false && <li>プレフィックスが不正です。</li> }
               </ul>
             </Alert>
           ) : (
