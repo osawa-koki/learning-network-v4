@@ -85,6 +85,7 @@ jobs:
             exit 1
           fi
   nextjs-test:
+    needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
