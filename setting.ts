@@ -7,7 +7,7 @@ const Setting = {
   title: '🌐 Learning Network 🌐',
   isProd,
   basePath: Env.basePath,
-  apiPath: isProd ? '' : 'http://localhost:80',
+  apiPath: process.env.NEXT_PUBLIC_LAMBDA_API_URL,
 };
 
 export default Setting;
