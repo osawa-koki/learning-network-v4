@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  api_dir: ./api
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,6 +21,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - run: echo -n ${{ secrets.SAMCONFIG_TOML }} | base64 --decode > samconfig.toml
+        working-directory: ${{ env.api_dir }}
       - run: cat samconfig.toml
+        working-directory: ${{ env.api_dir }}
       - run: sam build --use-container
+        working-directory: ${{ env.api_dir }}
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        working-directory: ${{ env.api_dir }}
