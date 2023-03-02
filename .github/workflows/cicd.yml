@@ -148,7 +148,7 @@ jobs:
       #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Show API Gateway URL
         run: |
-          echo ${{ needs.lambda-deploy.outputs.api_gateway_url }}
+          echo "api_gateway_url -> ${{ needs.lambda-deploy.outputs.api_gateway_url }}"
       - name: Check status code of curl response
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.lambda-deploy.outputs.api_gateway_url }}/your-info")
