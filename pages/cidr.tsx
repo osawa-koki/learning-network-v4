@@ -98,6 +98,10 @@ export default function CIDRPage() {
                   </tr>
                   <tr>
                     <th>アドレスサイズ</th>
+                    <td>{2 ** (32 - parseInt(prefix))} (2 ^ <sup>(32 - {prefix})</sup>)</td>
+                  </tr>
+                  <tr>
+                    <th>ホストサイズ</th>
                     <td>{2 ** (32 - parseInt(prefix)) - 2} (2 ^ <sup>(32 - {prefix})</sup> - 2)</td>
                   </tr>
                 </tbody>
