@@ -14,11 +14,12 @@
 export const lambdaHandler = async (event, context) => {
   try {
     const ip_address = event.requestContext.identity.sourceIp;
-    let result;
-    await fetch(`http://ip-api.com/json/${ip_address}}`)
+    const request_uri = `http://ip-api.com/json/${ip_address}}`;
+    let ip_api_result;
+    await fetch(request_uri)
       .then(response => response.json())
       .then(data => {
-        result = data;
+        ip_api_result = data;
       });
 
     return {
@@ -27,7 +28,10 @@ export const lambdaHandler = async (event, context) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      'body': JSON.stringify(result),
+      'body': JSON.stringify({
+        'request_uri': request_uri,
+        'ip-api': ip_api_result,
+      }),
     }
   } catch (err) {
     console.log(err);
