@@ -89,3 +89,12 @@ GitHubのリポジトリのSettingsから、`Secrets`を作成します。
 | AWS_SECRET_ACCESS_KEY | AWSのシークレットキー |
 | AWS_REGION | AWSのリージョン |
 | ENV_LOCAL | `.env.local`の内容 |
+
+## 小さな情報
+
+### Lambdaを使用した理由
+
+`ip-api.com`の無料枠では`HTTP`のみのアクセスが可能で、`https`のアクセスは制限されています。  
+`HTTPS`で通信しているサイトから`HTTP`で通信することはできないため、Lambdaを介してアクセスするために使用しています。  
+
+他のサービスも検討しましたが、Lambdaの学習という意味も込めて、Lambdaを使用することにしました。  
