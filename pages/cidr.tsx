@@ -83,7 +83,7 @@ export default function CIDRPage() {
                   </tr>
                   <tr>
                     <th>IPアドレス範囲(END)</th>
-                    <td>{getCIDRRanges("10.0.0.0", 24).ipAddressEnd}</td>
+                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd}</td>
                   </tr>
                 </tbody>
               </Table>
