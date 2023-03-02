@@ -70,7 +70,7 @@ jobs:
     steps:
       - name: Check status code of curl response
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" $API_GATEWAY_URL)
+          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_GATEWAY_URL }}")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
