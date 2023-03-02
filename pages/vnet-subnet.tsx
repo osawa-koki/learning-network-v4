@@ -70,6 +70,18 @@ export default function VNetSubnetPage() {
       error = 'サブネットが仮想ネットワークに含まれていません。';
     }
     // サブネットが他のサブネットと重複していないか判断
+    let collision_check = false;
+    let collision_ids: string[] = [];
+    other_subnets.forEach((s) => {
+      if (s.ip === subnet_ip && s.prefix === subnet_prefix) return; // 自分自身は除外
+      if (subnetIsInVNet(subnet_ip, subnet_prefix, s.ip, s.prefix)) {
+        collision_check = true;
+        collision_ids.push(s.id);
+      }
+    });
+    if (collision_check) {
+      error = `サブネットが他のサブネットと重複しています。(${collision_ids.join(', ')})`;
+    }
 
     if (error !== null) {
       return (
