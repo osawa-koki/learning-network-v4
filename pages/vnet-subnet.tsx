@@ -115,10 +115,9 @@ export default function VNetSubnetPage() {
           <thead>
             <tr>
               <th>#</th>
-              <th>ip</th>
-              <th>prefix</th>
-              <th>エラー</th>
-              <th>削除</th>
+              <th>subnet</th>
+              <th>error</th>
+              <th>delete</th>
             </tr>
           </thead>
           <tbody>
