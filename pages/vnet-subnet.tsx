@@ -20,7 +20,8 @@ export default function VNetSubnetPage() {
     if (subnet) {
       if (type === 'vnet') {
         subnet.ip = value;
-      } else if (type === 'subnet') {
+      }
+      if (type === 'subnet') {
         subnet.prefix = value;
       }
       setSubnets([...subnets]);
