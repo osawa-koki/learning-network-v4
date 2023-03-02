@@ -105,9 +105,21 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Generating .env.local
+      # - name: Generating .env.local
+      #   run: |
+      #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
+      - name: Show API Gateway URL
         run: |
-          echo "${{ secrets.ENV_LOCAL }}" > .env.local
+          cat ${{ env.API_GATEWAY_URL }}
+      - name: Set API Gateway URL
+        run: |
+          echo "${{ env.API_GATEWAY_URL }}$\n" >> .env.local
+      - name: Cat .env.local
+        run: |
+          echo .env.local
+      - name: Set API Gateway URL
+        run: |
+          echo "${{ env.API_GATEWAY_URL }}$\n" >> .env.local
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} build
       - name: Upload artifact
