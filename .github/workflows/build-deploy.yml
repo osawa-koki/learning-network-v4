@@ -2,11 +2,11 @@
 #
 # To get started with Next.js see: https://nextjs.org/docs/getting-started
 #
-name: Build and Deploy
+name: Build and Deploy Next.js site to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: ["Test Next.js site", "Deploy Lambda project"]
     types:
       - completed
 
