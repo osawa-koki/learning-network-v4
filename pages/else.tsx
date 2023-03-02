@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Alert, Spinner, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 
 export default function ElsePage() {
