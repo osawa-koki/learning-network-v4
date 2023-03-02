@@ -158,7 +158,7 @@ jobs:
           echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.API_GATEWAY_URL }}$\n" >> .env.local
       - name: Cat .env.local
         run: |
-          echo .env.local
+          cat .env.local
       - name: Set API Gateway URL
         run: |
           echo "${{ env.API_GATEWAY_URL }}$\n" >> .env.local
