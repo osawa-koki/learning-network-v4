@@ -124,10 +124,9 @@ export default function VNetSubnetPage() {
             {subnets.map((subnet, _) => (
               <tr key={subnet.id}>
                 <td>{subnet.id}</td>
-                <td>
+                <td className="d-flex justify-content-center align-items-center">
                   <Form.Control type="text" value={subnet.ip} onInput={(e) => {PutSubnet(subnet.id, e, 'vnet')}} className='ip' />
-                </td>
-                <td>
+                  <div className='px-3'>/</div>
                   <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
                 <td>
