@@ -6,6 +6,7 @@ function isValidIPv4(ipAddress: string): boolean {
   }
   for (const part of ipAddressParts) {
     const numericPart = parseInt(part);
+    if (numericPart.toString() !== part) return false; // parseInt("10A") === 10
     if (isNaN(numericPart) || numericPart < 0 || numericPart > 255) {
       return false;
     }
