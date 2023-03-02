@@ -92,13 +92,31 @@ export default function VNetSubnetPage() {
             </div>
           </Form.Group>
         </Form>
+        {
+          (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) && (
+            <Alert variant='danger' className='mt-3'>
+              <ul>
+                {
+                  isValidIPv4(vnet_ip) === false && (
+                    <li>IPアドレスが不正です。</li>
+                  )
+                }
+                {
+                  isValidPrefix(vnet_prefix) === false && (
+                    <li>プレフィックスが不正です。</li>
+                  )
+                }
+              </ul>
+            </Alert>
+          )
+        }
         <hr />
         <Table striped bordered hover size="sm" className="mt-3">
           <thead>
             <tr>
               <th>#</th>
-              <th>サブネットIP</th>
-              <th>サブネットプレフィックス</th>
+              <th>ip</th>
+              <th>prefix</th>
               <th>エラー</th>
               <th>削除</th>
             </tr>
