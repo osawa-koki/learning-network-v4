@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Alert, Button, Form, Spinner, Table } from 'react-bootstrap';
+import { Alert, Button, Form, OverlayTrigger, Spinner, Table, Tooltip } from 'react-bootstrap';
+import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
+
+import isValidIPv4 from '../util/isValidIPv4';
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -37,6 +40,7 @@ export default function VNetSubnetPage() {
   };
 
   const Delete = (id: string) => () => {
+    if (window.confirm('削除しますか？') === false) return;
     const index = subnets.findIndex((s) => s.id === id);
     if (index < 0) return;
     subnets.splice(index, 1);
@@ -46,6 +50,22 @@ export default function VNetSubnetPage() {
     });
     setSubnets([...subnets]);
   };
+
+  // 戻り値は要素
+  const ValidationCheck = (subnet_ip: string, subnet_prefix: string, vnet_ip, vnet_prefix, other_subnets: {id: string, ip: string, prefix: string}[]) => {
+    // サブネットIPが妥当か判断
+    if (isValidIPv4(subnet_ip) === false) {
+      return (
+        <OverlayTrigger overlay={<Tooltip>IPアドレスの形式が不正です。</Tooltip>}>
+          <div><BsFillBellFill className="d-block m-auto text-danger" /></div>
+        </OverlayTrigger>
+      );
+    }
+    // サブネットプレフィックスが妥当か判断
+    // サブネットが仮想ネットワークに含まれているか判断
+    // サブネットが他のサブネットと重複していないか判断
+    return <div></div>;
+  }
 
   return (
     <Layout>
@@ -85,10 +105,12 @@ export default function VNetSubnetPage() {
                   <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
                 <td>
-                  エラー
+                  {
+                    ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id))
+                  }
                 </td>
                 <td>
-                  <Button variant="danger" onClick={Delete(subnet.id)}>削除</Button>
+                  <Button variant="secondary" onClick={Delete(subnet.id)}>削除</Button>
                 </td>
               </tr>
             ))}
