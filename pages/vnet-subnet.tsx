@@ -147,6 +147,17 @@ export default function VNetSubnetPage() {
           </tbody>
         </Table>
         <Button variant="primary" onClick={Add} disabled={subnet_ids.length === subnets.length}>Add</Button>
+        {
+          subnets.filter(subnet => subnet.ip !== getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress).map(subnet => (
+            <Alert variant="info" className="mt-3">
+              '#{subnet.id}'は、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}/{subnet.prefix}'を使用することをお勧めします。
+              <hr />
+              <Button variant='info' onClick={() => {
+                PutSubnet(subnet.id, { target: { value: getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress } }, 'vnet')
+              }} size="sm">Set to {getIpDetails(subnet.ip, parseInt(subnet.prefix)).networkAddress}</Button>
+            </Alert>
+          ))
+        }
       </div>
     </Layout>
   );
