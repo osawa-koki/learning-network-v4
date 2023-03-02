@@ -45,7 +45,21 @@ jobs:
       - run: sam build --use-container
         working-directory: ${{ env.api_dir }}
       - name: Deploy Lambda
-        # ECRがなければ作成してからデプロイ
-        # S3がなければ作成してからデプロイ
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --resolve-image-repos --stack-name learning-network-v4 --s3-bucket learning-network-v4 --capabilities CAPABILITY_IAM || aws s3 mb s3://learning-network-v4 && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --resolve-image-repos --stack-name learning-network-v4 --s3-bucket learning-network-v4 --capabilities CAPABILITY_IAM
+        env:
+          project_name: learning-network-v4
+        run: |
+          sam deploy \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --resolve-image-repos \
+            --stack-name learning-network-v4 \
+            --s3-bucket ${{ env.project_name }} \
+            --capabilities CAPABILITY_IAM \
+          || aws s3 mb s3://${{ env.project_name }} && sam deploy \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --resolve-image-repos \
+            --stack-name learning-network-v4 \
+            --s3-bucket ${{ env.project_name }} \
+            --capabilities CAPABILITY_IAM
         working-directory: ${{ env.api_dir }}
