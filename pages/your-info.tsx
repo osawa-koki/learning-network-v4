@@ -26,7 +26,7 @@ export default function YourInfoPage() {
   const [as, setAs] = useState<string | null>(null);
 
   useEffect(() => {
-    await fetch(`${Setting.apiPath}/your-info`)
+    fetch(`${Setting.apiPath}/your-info`)
     .then(response => response.json())
     .then((data: any) => {
       const ip_api_data = data['ip-api'];
