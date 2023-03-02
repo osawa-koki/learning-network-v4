@@ -65,8 +65,7 @@ NEXT_PUBLIC_LAMBDA_API_URL=https://xxxxxxxxxx.execute-api.ap-northeast-1.amazona
 ```
 
 これはGit管理対象外にしています。  
-デプロイ用にはGitHubシークレットを使用します。  
-詳しくは後述します。  
+`.env.local`は、ローカルでのみ使用するためです。  
 
 ---
 
@@ -88,7 +87,6 @@ GitHubのリポジトリのSettingsから、`Secrets`を作成します。
 | AWS_ACCESS_KEY_ID | AWSのアクセスキー |
 | AWS_SECRET_ACCESS_KEY | AWSのシークレットキー |
 | AWS_REGION | AWSのリージョン |
-| ENV_LOCAL | `.env.local`の内容 |
 
 ## 小さな情報
 
