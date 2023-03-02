@@ -72,11 +72,11 @@ export default function VNetSubnetPage() {
       error = 'サブネットが仮想ネットワークに含まれていません。';
     }
     // サブネットが他のサブネットと重複していないか判断
-    const [collisioning, collisioning_ids] = collisionChecker(
+    const collisioning_ids = collisionChecker(
       {id: null, ip: subnet_ip, prefix: subnet_prefix} as SubnetStruct,
       other_subnets,
     );
-    if (collisioning) {
+    if (collisioning_ids.length !== 0) {
       error = `サブネットが他のサブネットと重複しています。(${collisioning_ids.map(id => `'#${id}'`).join(', ')})`;
     }
 

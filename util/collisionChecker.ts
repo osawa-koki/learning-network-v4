@@ -1,4 +1,5 @@
 import getIPAddressBits from "./getIPAddressBits";
+import getIpDetails from "./getIpDetails";
 
 type SubnetStruct = {
   id: string;
@@ -6,31 +7,35 @@ type SubnetStruct = {
   prefix: string;
 };
 
-function collisionChecker(subnet: SubnetStruct, other_subnets: SubnetStruct[]): [boolean, string[]] {
-  const subnet_ip = subnet.ip;
-  const subnet_prefix = subnet.prefix;
-  const subnet_bits = getIPAddressBits(subnet_ip);
-  const subnet_mask_bits = '1'.repeat(Number(subnet_prefix)).padEnd(32, '0');
-  const subnet_network_bits = (parseInt(subnet_bits, 2) & parseInt(subnet_mask_bits, 2)).toString(2).padStart(32, '0');
-
+function collisionChecker(subnet: SubnetStruct, other_subnets: SubnetStruct[]): string[] {
   const collision_subnet_ids: string[] = [];
+  const subnetDetails = getIpDetails(subnet.ip, parseInt(subnet.prefix));
+  const networkAddress = subnetDetails.networkAddress;
+  const broadcastAddress = subnetDetails.broadcastAddress;
+  const networkAddressBits = getIPAddressBits(networkAddress);
+  const broadcastAddressBits = getIPAddressBits(broadcastAddress);
 
   for (const other_subnet of other_subnets) {
-    const other_subnet_ip = other_subnet.ip;
-    const other_subnet_prefix = other_subnet.prefix;
-    const other_subnet_bits = getIPAddressBits(other_subnet_ip);
-    const other_subnet_mask_bits = '1'.repeat(Number(other_subnet_prefix)).padEnd(32, '0');
-    const other_subnet_network_bits = (parseInt(other_subnet_bits, 2) & parseInt(other_subnet_mask_bits, 2)).toString(2).padStart(32, '0');
+    if (other_subnet.id === subnet.id) {
+      continue;
+    }
+    const other_subnetDetails = getIpDetails(other_subnet.ip, parseInt(other_subnet.prefix));
+    const other_networkAddress = other_subnetDetails.networkAddress;
+    const other_broadcastAddress = other_subnetDetails.broadcastAddress;
+    const other_networkAddressBits = getIPAddressBits(other_networkAddress);
+    const other_broadcastAddressBits = getIPAddressBits(other_broadcastAddress);
 
-    if (subnet_network_bits === other_subnet_network_bits && subnet_prefix === other_subnet_prefix && subnet_ip !== other_subnet_ip) {
+    if (
+      (networkAddressBits <= other_networkAddressBits &&
+        other_networkAddressBits <= broadcastAddressBits) ||
+      (networkAddressBits <= other_broadcastAddressBits &&
+        other_broadcastAddressBits <= broadcastAddressBits)
+    ) {
       collision_subnet_ids.push(other_subnet.id);
     }
   }
 
-  if (collision_subnet_ids.length > 0) {
-    return [true, collision_subnet_ids];
-  }
-  return [false, collision_subnet_ids];
+  return collision_subnet_ids;
 }
 
 export default collisionChecker;
