@@ -13,16 +13,20 @@
 
 export const lambdaHandler = async (event, context) => {
   try {
+    const ip_address = event.requestContext.identity.sourceIp;
+    let data;
+    await fetch(`http://ip-api.com/json/${ip_address}}`)
+      .then(response => response.json())
+      .then(data => {
+        data = data;
+      });
+
     return {
       'statusCode': 200,
-      'body': JSON.stringify({
-        message: 'hello world',
-      })
+      'body': JSON.stringify(data),
     }
   } catch (err) {
     console.log(err);
     return err;
   }
-
-  return response
 };
