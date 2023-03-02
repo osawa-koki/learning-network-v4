@@ -149,25 +149,25 @@ jobs:
         env:
           OUTPUT1: ${{ needs.lambda-deploy.outputs.output1 }}
         run: |
-          echo "API Gateway URL -> ${{ OUTPUT1 }}"
+          echo "API Gateway URL -> ${{ env.OUTPUT1 }}"
       - name: Check status code of curl response
         env:
           OUTPUT1: ${{ needs.lambda-deploy.outputs.output1 }}
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ OUTPUT1 }}/your-info")
+          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.OUTPUT1 }}/your-info")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
             echo "Failed"
             echo "Response code: $response"
-            echo "API Gateway URL: ${{ OUTPUT1 }}"
+            echo "API Gateway URL: ${{ env.OUTPUT1 }}"
             exit 1
           fi
       - name: Set API Gateway URL
         env:
           OUTPUT1: ${{ needs.lambda-deploy.outputs.output1 }}
         run: |
-          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ OUTPUT1 }}$\n" >> .env.local
+          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.OUTPUT1 }}$\n" >> .env.local
       - name: Cat .env.local
         run: |
           cat .env.local
