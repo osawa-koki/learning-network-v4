@@ -41,8 +41,6 @@ jobs:
     needs: lambda-test
     if: ${{ needs.lambda-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
-    outputs:
-      api_gateway_url: ${{ steps.output.outputs.url }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
@@ -91,6 +89,8 @@ jobs:
       - name: Set output
         id: output
         run: echo "::set-output name=url::${{ env.API_GATEWAY_URL }}"
+    outputs:
+      api_gateway_url: ${{ steps.output.outputs.url }}
   nextjs-test:
     # needs: lambda-deploy
     runs-on: ubuntu-latest
