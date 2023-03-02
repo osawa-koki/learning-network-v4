@@ -10,6 +10,7 @@ import isValidPrefix from '../util/isValidPrefix';
 import subnetIsInVNet from '../util/subnetIsInVNet';
 import collisionChecker from '../util/collisionChecker';
 import { SubnetStruct } from '../util/collisionChecker';
+import getNextSubnetIp from "../util/getNextSubnetIp";
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -38,8 +39,11 @@ export default function VNetSubnetPage() {
 
   const Add = () => {
     const id = subnet_ids.find((id) => !subnets.find((s) => s.id === id));
+    const last_subnet = subnets[subnets.length - 1];
+    const last_subnet_ip = last_subnet.ip;
+    const last_subnet_prefix = last_subnet.prefix;
     if (id) {
-      subnets.push({id, ip: '', prefix: ''});
+      subnets.push({id, ip: getNextSubnetIp(last_subnet_ip, last_subnet_prefix), prefix: last_subnet_prefix});
       setSubnets([...subnets]);
     }
   };
