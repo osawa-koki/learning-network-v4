@@ -4,6 +4,7 @@ import { Alert, Button, Form, OverlayTrigger, Spinner, Table, Tooltip } from 're
 import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
+import getIpDetails from '../util/getIpDetails';
 import isValidIPv4 from '../util/isValidIPv4';
 import isValidPrefix from '../util/isValidPrefix';
 import subnetIsInVNet from '../util/subnetIsInVNet';
@@ -97,13 +98,21 @@ export default function VNetSubnetPage() {
           </Form.Group>
         </Form>
         {
-          (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) && (
+          (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) ? (
             <Alert variant='danger' className='mt-3'>
               <ul>
                 {isValidIPv4(vnet_ip) === false && <li>IPアドレスが不正です。</li>}
                 {isValidPrefix(vnet_prefix) === false && <li>プレフィックスが不正です。</li>}
               </ul>
             </Alert>
+          ) : (
+            vnet_ip !== getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress && (
+              <Alert variant="info" className="mt-3">
+                これは、'{getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}/{vnet_prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}/{vnet_prefix}'を使用することをお勧めします。
+                <hr />
+                <Button variant='info' onClick={() => setVNetIP(getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress)} size="sm">Set to {getIpDetails(vnet_ip, parseInt(vnet_prefix)).networkAddress}</Button>
+              </Alert>
+            )
           )
         }
         <hr />
