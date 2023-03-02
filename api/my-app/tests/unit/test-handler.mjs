@@ -2,10 +2,19 @@
 
 import { lambdaHandler } from '../../app.mjs';
 import { expect } from 'chai';
-var event, context;
 
 describe('Tests index', function () {
   it('verifies successful response', async () => {
+
+    const event = {
+      "requestContext": {
+        "identity": {
+          "sourceIp": "10.0.0.0"
+        }
+      }
+    };
+    const context = {};
+
     const result = await lambdaHandler(event, context)
 
     expect(result).to.be.an('object');
@@ -15,6 +24,6 @@ describe('Tests index', function () {
     let response = JSON.parse(result.body);
 
     expect(response).to.be.an('object');
-    expect(response.message).to.be.equal("hello world");
+    expect(response.message).to.be.equal("private range");
   });
 });
