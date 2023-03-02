@@ -26,7 +26,8 @@ export default function YourInfoPage() {
   const [as, setAs] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${Setting.apiPath}/your-info`)
+    try {
+      fetch(`${Setting.apiPath}/your-info`)
       .then(response => response.json())
       .then((data: any) => {
         console.log(data);
@@ -51,6 +52,11 @@ export default function YourInfoPage() {
         setError(error);
         setFetched('error');
       });
+    } catch (error) {
+      console.error(error);
+      setError(error);
+      setFetched('error');
+    }
   }, []);
 
   return (
