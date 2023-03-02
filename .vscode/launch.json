@@ -3,11 +3,11 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
-      "name": "learning-network-v4:HelloWorldFunction",
+      "name": "learning-network-v4:YourInfoFunction",
       "invokeTarget": {
         "target": "template",
         "templatePath": "${workspaceFolder}/api/learning-network-v4/template.yaml",
-        "logicalId": "HelloWorldFunction"
+        "logicalId": "YourInfoFunction"
       },
       "lambda": {
         "payload": {},
@@ -18,11 +18,11 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
-      "name": "API learning-network-v4:HelloWorldFunction",
+      "name": "API learning-network-v4:YourInfoFunction",
       "invokeTarget": {
         "target": "api",
         "templatePath": "${workspaceFolder}/api/learning-network-v4/template.yaml",
-        "logicalId": "HelloWorldFunction"
+        "logicalId": "YourInfoFunction"
       },
       "api": {
         "path": "/hello",
