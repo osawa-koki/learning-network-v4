@@ -77,11 +77,13 @@ jobs:
         run: echo $API_GATEWAY_URL
       - name: Check status code of curl response
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_GATEWAY_URL }}")
+          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.API_GATEWAY_URL }}/your-info")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
             echo "Failed"
+            echo "Response code: $response"
+            echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
   nextjs-test:
