@@ -14,7 +14,7 @@
 export const lambdaHandler = async (event, context) => {
   try {
     const ip_address = event.requestContext.identity.sourceIp;
-    const request_uri = `http://ip-api.com/json/${ip_address}}`;
+    const request_uri = `http://ip-api.com/json/${ip_address}`;
     let ip_api_result;
     await fetch(request_uri)
       .then(response => response.json())
