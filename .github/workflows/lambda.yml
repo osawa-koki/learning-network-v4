@@ -44,5 +44,5 @@ jobs:
         working-directory: ${{ env.api_dir }}
       - run: sam build --use-container
         working-directory: ${{ env.api_dir }}
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --resolve-image-repos
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
         working-directory: ${{ env.api_dir }}
