@@ -112,7 +112,7 @@ export default function VNetSubnetPage() {
         }
         <hr />
         <Table striped bordered hover size="sm" className="mt-3">
-          <thead>
+          <thead className="text-center">
             <tr>
               <th>#</th>
               <th>subnet</th>
