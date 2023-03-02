@@ -1,4 +1,4 @@
-name: Deploy Lambda project
+name: Deploy Lambda
 
 on:
   workflow_run:
