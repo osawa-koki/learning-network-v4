@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Alert, Form, Spinner, Table } from 'react-bootstrap';
+import { Alert, Button, Form, Spinner, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 
 const subnet_ids = 'ABCDE'.split('');
@@ -28,6 +28,25 @@ export default function VNetSubnetPage() {
     }
   };
 
+  const Add = () => {
+    const id = subnet_ids.find((id) => !subnets.find((s) => s.id === id));
+    if (id) {
+      subnets.push({id, ip: '', prefix: ''});
+      setSubnets([...subnets]);
+    }
+  };
+
+  const Delete = (id: string) => () => {
+    const index = subnets.findIndex((s) => s.id === id);
+    if (index < 0) return;
+    subnets.splice(index, 1);
+    // IDを振り直す
+    subnets.forEach((s, i) => {
+      s.id = subnet_ids[i];
+    });
+    setSubnets([...subnets]);
+  };
+
   return (
     <Layout>
       <div id="VNetSubnet">
@@ -51,6 +70,8 @@ export default function VNetSubnetPage() {
               <th>#</th>
               <th>サブネットIP</th>
               <th>サブネットプレフィックス</th>
+              <th>エラー</th>
+              <th>削除</th>
             </tr>
           </thead>
           <tbody>
@@ -63,10 +84,17 @@ export default function VNetSubnetPage() {
                 <td>
                   <Form.Control type="number" placeholder='24' value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
+                <td>
+                  エラー
+                </td>
+                <td>
+                  <Button variant="danger" onClick={Delete(subnet.id)}>削除</Button>
+                </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        <Button variant="primary" onClick={Add}>Add</Button>
       </div>
     </Layout>
   );
