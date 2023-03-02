@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Button, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 import CIDR from "../components/CIDR";
-import getCIDRRanges from "../util/getIpDetails";
+import getIpDetails from "../util/getIpDetails";
 import isValidIPv4 from "../util/isValidIPv4";
 import isValidPrefix from "../util/isValidPrefix";
 import getIPAddressBits from "../util/getIPAddressBits";
@@ -43,12 +43,12 @@ export default function CIDRPage() {
               <Alert variant='info' className='mt-3'>
                 '{ip}/{prefix}'はCIDR表記として有効です。
                 {
-                  ip !== getCIDRRanges(ip, parseInt(prefix)).networkAddress && (
+                  ip !== getIpDetails(ip, parseInt(prefix)).networkAddress && (
                     <>
                       <hr />
-                      これは、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'と同じ範囲を表しています。<br />代わりに、'{getCIDRRanges(ip, parseInt(prefix)).networkAddress}/{prefix}'を使用することをお勧めします。
+                      これは、'{getIpDetails(ip, parseInt(prefix)).networkAddress}/{prefix}'と同じ範囲を表しています。<br />代わりに、'{getIpDetails(ip, parseInt(prefix)).networkAddress}/{prefix}'を使用することをお勧めします。
                       <hr />
-                      <Button variant='info' onClick={() => setIP(getCIDRRanges(ip, parseInt(prefix)).networkAddress)} size="sm">Set to {getCIDRRanges(ip, parseInt(prefix)).networkAddress}</Button>
+                      <Button variant='info' onClick={() => setIP(getIpDetails(ip, parseInt(prefix)).networkAddress)} size="sm">Set to {getIpDetails(ip, parseInt(prefix)).networkAddress}</Button>
                     </>
                   )
                 }
@@ -82,23 +82,27 @@ export default function CIDRPage() {
                   </tr>
                   <tr>
                     <th>ネットワークアドレス</th>
-                    <td>{getCIDRRanges(ip, parseInt(prefix)).networkAddress}</td>
+                    <td>{getIpDetails(ip, parseInt(prefix)).networkAddress}</td>
                   </tr>
                   <tr>
                     <th>ブロードキャストアドレス</th>
-                    <td>{getCIDRRanges(ip, parseInt(prefix)).broadcastAddress}</td>
+                    <td>{getIpDetails(ip, parseInt(prefix)).broadcastAddress}</td>
                   </tr>
                   <tr>
                     <th>IPアドレス範囲(FROM)</th>
-                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressStart}</td>
+                    <td>{getIpDetails(ip, parseInt(prefix)).ipAddressStart}</td>
                   </tr>
                   <tr>
                     <th>IPアドレス範囲(END)</th>
-                    <td>{getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd}</td>
+                    <td>{getIpDetails(ip, parseInt(prefix)).ipAddressEnd}</td>
+                  </tr>
+                  <tr>
+                    <th>アドレスサイズ</th>
+                    <td>{2 ** (32 - parseInt(prefix)) - 2} (2 ^ <sup>(32 - {prefix})</sup> - 2)</td>
                   </tr>
                 </tbody>
               </Table>
-              <CIDR cidr={`${ip}/${prefix}`} network_address={getCIDRRanges(ip, parseInt(prefix)).networkAddress} broadcast_address={getCIDRRanges(ip, parseInt(prefix)).broadcastAddress} first_address={getCIDRRanges(ip, parseInt(prefix)).ipAddressStart} last_address={getCIDRRanges(ip, parseInt(prefix)).ipAddressEnd} />
+              <CIDR cidr={`${ip}/${prefix}`} network_address={getIpDetails(ip, parseInt(prefix)).networkAddress} broadcast_address={getIpDetails(ip, parseInt(prefix)).broadcastAddress} first_address={getIpDetails(ip, parseInt(prefix)).ipAddressStart} last_address={getIpDetails(ip, parseInt(prefix)).ipAddressEnd} />
             </>
           )
         }
