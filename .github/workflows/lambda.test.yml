@@ -1,0 +1,22 @@
+name: Test Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  api_dir: ./app/my-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - run: npm install
+        working-directory: ${{ env.api_dir }}
+      - run: npm run test
+        working-directory: ${{ env.api_dir }}

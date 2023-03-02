@@ -21,6 +21,7 @@
 ### 3. Lambdaのデプロイ
 
 以下のコマンドを実行します。  
+これは`./api`ディレクトリに移動して実行します。  
 
 ```shell
 sam build --use-container
