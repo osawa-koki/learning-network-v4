@@ -9,7 +9,7 @@ type FetchingState = "fetching" | "fetched" | "error";
 export default function YourInfoPage() {
 
   const [fetching_state, setFetched] = useState<FetchingState>('fetching');
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const [ip, setIp] = useState<string | null>(null);
   const [country, setCountry] = useState<string | null>(null);
@@ -46,8 +46,7 @@ export default function YourInfoPage() {
       setFetched('fetched');
     })
     .catch(error => {
-      console.error(error);
-      setError(error);
+      setError(`${error.name}: ${error.message}`);
       setFetched('error');
     });
   }, []);
