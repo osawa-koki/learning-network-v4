@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 
 import isValidIPv4 from '../util/isValidIPv4';
 import isValidPrefix from '../util/isValidPrefix';
+import subnetIsInVNet from '../util/subnetIsInVNet';
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -64,6 +65,9 @@ export default function VNetSubnetPage() {
       error = 'プレフィックスの値が不正です。';
     }
     // サブネットが仮想ネットワークに含まれているか判断
+    if (subnetIsInVNet(subnet_ip, subnet_prefix, vnet_ip, vnet_prefix) === false) {
+      error = 'サブネットが仮想ネットワークに含まれていません。';
+    }
     // サブネットが他のサブネットと重複していないか判断
 
     if (error !== null) {
