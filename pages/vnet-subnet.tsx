@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { Alert, Button, Form, OverlayTrigger, Spinner, Table, Tooltip } from 'react-bootstrap';
+import { Alert, Button, Form, OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
