@@ -5,6 +5,7 @@ import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
 import isValidIPv4 from '../util/isValidIPv4';
+import isValidPrefix from '../util/isValidPrefix';
 
 const subnet_ids = 'ABCDE'.split('');
 
@@ -53,17 +54,25 @@ export default function VNetSubnetPage() {
 
   // 戻り値は要素
   const ValidationCheck = (subnet_ip: string, subnet_prefix: string, vnet_ip, vnet_prefix, other_subnets: {id: string, ip: string, prefix: string}[]) => {
+    let error: string | null = null;
     // サブネットIPが妥当か判断
     if (isValidIPv4(subnet_ip) === false) {
+      error = 'IPアドレスの形式が不正です。';
+    }
+    // サブネットプレフィックスが妥当か判断
+    if (isValidPrefix(subnet_prefix) === false) {
+      error = 'プレフィックスの形式が不正です。';
+    }
+    // サブネットが仮想ネットワークに含まれているか判断
+    // サブネットが他のサブネットと重複していないか判断
+
+    if (error !== null) {
       return (
-        <OverlayTrigger overlay={<Tooltip>IPアドレスの形式が不正です。</Tooltip>}>
+        <OverlayTrigger overlay={<Tooltip>{error}</Tooltip>}>
           <div><BsFillBellFill className="d-block m-auto text-danger" /></div>
         </OverlayTrigger>
       );
     }
-    // サブネットプレフィックスが妥当か判断
-    // サブネットが仮想ネットワークに含まれているか判断
-    // サブネットが他のサブネットと重複していないか判断
     return <div></div>;
   }
 
