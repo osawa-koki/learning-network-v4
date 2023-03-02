@@ -144,9 +144,7 @@ export default function VNetSubnetPage() {
                   <Form.Control type="number" value={subnet.prefix} onInput={(e) => {PutSubnet(subnet.id, e, 'subnet')}} className='prefix' />
                 </td>
                 <td>
-                  {
-                    ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id))
-                  }
+                  { ValidationCheck(subnet.ip, subnet.prefix, vnet_ip, vnet_prefix, subnets.filter((s) => s.id !== subnet.id)) }
                 </td>
                 <td>
                   <Button variant="secondary" size="sm" onClick={Delete(subnet.id)}>削除</Button>
