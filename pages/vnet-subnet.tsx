@@ -100,16 +100,8 @@ export default function VNetSubnetPage() {
           (isValidIPv4(vnet_ip) === false || isValidPrefix(vnet_prefix) === false) && (
             <Alert variant='danger' className='mt-3'>
               <ul>
-                {
-                  isValidIPv4(vnet_ip) === false && (
-                    <li>IPアドレスが不正です。</li>
-                  )
-                }
-                {
-                  isValidPrefix(vnet_prefix) === false && (
-                    <li>プレフィックスが不正です。</li>
-                  )
-                }
+                {isValidIPv4(vnet_ip) === false && <li>IPアドレスが不正です。</li>}
+                {isValidPrefix(vnet_prefix) === false && <li>プレフィックスが不正です。</li>}
               </ul>
             </Alert>
           )
