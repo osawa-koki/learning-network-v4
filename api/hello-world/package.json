@@ -1,11 +1,11 @@
 {
-  "name": "hello_world",
+  "name": "learning-network-v4-api",
   "version": "1.0.0",
-  "description": "hello world sample for NodeJS",
+  "description": "learning-network-v4-api",
   "main": "app.js",
-  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
-  "author": "SAM CLI",
-  "license": "MIT",
+  "repository": "https://github.com/osawa-koki/learning-network-v4-api.git",
+  "author": "osawa-koki",
+  "license": "Apache-2.0",
   "dependencies": {
     "axios": ">=0.21.1"
   },
