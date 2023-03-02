@@ -6,7 +6,7 @@ name: Build and Deploy Next.js site to GitHub Pages
 
 on:
   workflow_run:
-    workflows: ["Test Next.js site", "Deploy Lambda project"]
+    workflows: ["Test Next.js", "Deploy Lambda"]
     types:
       - completed
 
@@ -23,7 +23,9 @@ concurrency:
 
 jobs:
   # Build job
-  build:
+  nextjs-build:
+    needs: nextjs-test
+    if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
