@@ -42,7 +42,7 @@ jobs:
       #   working-directory: ${{ env.api_dir }}
       # - run: cat samconfig.toml
       #   working-directory: ${{ env.api_dir }}
-      - run: sam build --use-container
+      - run: sam build --use-container --resolve-image-repos
         working-directory: ${{ env.api_dir }}
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --resolve-image-repos
         working-directory: ${{ env.api_dir }}
