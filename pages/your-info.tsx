@@ -30,19 +30,20 @@ export default function YourInfoPage() {
       .then(response => response.json())
       .then((data: any) => {
         console.log(data);
-        setIp(data.query);
-        setCountry(data.country);
-        setCountryCode(data.countryCode);
-        setRegion(data.region);
-        setRegionName(data.regionName);
-        setCity(data.city);
-        setZip(data.zip);
-        setLat(data.lat);
-        setLon(data.lon);
-        setTimezone(data.timezone);
-        setIsp(data.isp);
-        setOrg(data.org);
-        setAs(data.as);
+        const ip_api_data = data['ip-api'];
+        setIp(ip_api_data.query);
+        setCountry(ip_api_data.country);
+        setCountryCode(ip_api_data.countryCode);
+        setRegion(ip_api_data.region);
+        setRegionName(ip_api_data.regionName);
+        setCity(ip_api_data.city);
+        setZip(ip_api_data.zip);
+        setLat(ip_api_data.lat);
+        setLon(ip_api_data.lon);
+        setTimezone(ip_api_data.timezone);
+        setIsp(ip_api_data.isp);
+        setOrg(ip_api_data.org);
+        setAs(ip_api_data.as);
         setFetched('fetched');
       })
       .catch(error => {
