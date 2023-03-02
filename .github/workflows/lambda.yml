@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 env:
+  project_name: learning-network-v4
   app_dir: ./api/my-app
   api_dir: ./api
 
@@ -41,8 +42,6 @@ jobs:
       - run: sam build --use-container
         working-directory: ${{ env.api_dir }}
       - name: Deploy Lambda
-        env:
-          project_name: learning-network-v4
         run: |
           sam deploy \
             --no-confirm-changeset \
