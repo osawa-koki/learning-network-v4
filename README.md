@@ -87,6 +87,7 @@ GitHubのリポジトリのSettingsから、`Secrets`を作成します。
 | AWS_ACCESS_KEY_ID | AWSのアクセスキー |
 | AWS_SECRET_ACCESS_KEY | AWSのシークレットキー |
 | AWS_REGION | AWSのリージョン |
+| SLACK_WEBHOOK_URL | SlackのWebhook URL |
 
 ## 小さな情報
 
