@@ -1,5 +1,5 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 import Layout from "../components/Layout";
 
