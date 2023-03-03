@@ -27,8 +27,8 @@ const pages = [
   },
   {
     emoji: "🔮",
-    path: "/fortune/",
-    name: "Fortune",
+    path: "/special-ip/",
+    name: "Special IP",
   },
 ];
 
