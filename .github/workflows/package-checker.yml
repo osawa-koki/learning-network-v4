@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Install jq
-        run: sudo apt-get update && sudo apt-get -y install jq
+        run: apt-get update && apt-get -y install jq
       - name: Check for deprecated packages
         run: yarn outdated --json --long | jq -c '.[] | select(.type == "table") | .data[] | select(.[5] == "deprecated")'
         id: check
