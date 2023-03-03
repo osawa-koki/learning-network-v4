@@ -17,7 +17,7 @@ jobs:
         run: yarn install
       - name: Check for deprecated packages
         id: check
-        run: echo 1
+        run: yarn outdated
         continue-on-error: true
       - name: Post to Slack
         uses: 8398a7/action-slack@v3
