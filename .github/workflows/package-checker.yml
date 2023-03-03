@@ -1,6 +1,9 @@
 name: Check for Deprecated Packages
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 */6 * * *' # 4回実行する。1回あたり4時間おきに実行。
 
