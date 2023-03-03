@@ -23,10 +23,7 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: 'failure'
-          text: |
-            {{#if steps.check.outputs.stdout}}
-              "Deprecated packages found! {{ steps.check.outputs.stdout }}"
-            {{/if}}
+          text: "{{#if steps.check.outputs.stdout}}Deprecated packages found! {{ steps.check.outputs.stdout }}{{/if}}"
           channel: '#alert'
           username: 'Github Actions'
         env:
