@@ -20,6 +20,16 @@ const pages = [
     path: "/vnet-subnet/",
     name: "VNet Subnet",
   },
+  {
+    emoji: "🕷",
+    path: "/subnet-list/",
+    name: "Subnet List",
+  },
+  {
+    emoji: "🔮",
+    path: "/special-ip/",
+    name: "Special IP",
+  },
 ];
 
 export default pages;
