@@ -17,13 +17,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install
-      - name: Install jq
-        run: apt-get update && apt-get -y install jq
       - name: Check for deprecated packages
-        run: yarn outdated --json --long | jq -c '.[] | select(.type == "table") | .data[] | select(.[5] == "deprecated")'
         id: check
+        run: yarn outdated
       - name: Post to Slack
-        if: steps.check.outputs.stdout != ''
+        if: ${{ steps.check.outcome == 'failure' }}
         uses: 8398a7/action-slack@v3
         with:
           status: 'warning'
