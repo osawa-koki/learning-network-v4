@@ -1,20 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import { Table } from "react-bootstrap";
 
-import { Alert, Button, Form, OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
-import { BsFillBellFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 
-import getIpDetails from '../util/getIpDetails';
-import isValidIPv4 from '../util/isValidIPv4';
-import isValidPrefix from '../util/isValidPrefix';
-import subnetIsInVNet from '../util/subnetIsInVNet';
-import collisionChecker from '../util/collisionChecker';
-import { SubnetStruct } from '../util/collisionChecker';
-import getNextSubnetIp from "../util/getNextSubnetIp";
 import getSubnetMask from "../util/getSubnetMask";
 import getIPAddressBits from "../util/getIPAddressBits";
 
-// 1..32の配列を作成
 const prefixes = Array.from(Array(32), (_, i) => i + 1);
 
 export default function SubnetListPage() {
