@@ -4,8 +4,14 @@ on:
   push:
     branches:
       - main
+      - develop
   schedule:
     - cron: '0 */6 * * *' # 4回実行する。1回あたり4時間おきに実行。
+
+env:
+  project_name: learning-network-v4
+  slack_channel: '#alert'
+  slack_username: 'Github Actions'
 
 jobs:
   check-deprecated:
@@ -21,17 +27,15 @@ jobs:
         id: check
         run: yarn outdated
         continue-on-error: true
-      - name: Check result
-        run: echo ${{ steps.check.conclusion }}
       - name: Post to Slack
-        #if: ${{ steps.check.conclusion == 'failure' }}
         uses: 8398a7/action-slack@v3
         with:
           status: 'failure'
           text: |
-            "Deprecated packages found!"
-          channel: '#alert'
-          username: 'Github Actions'
+            Deprecated package(s) found!
+            -> ${{ env.project_name }}
+          channel: ${{ env.slack_channel }}
+          username: ${{ env.slack_username }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+        if: ${{ always() && steps.check.outcome != 'success' }}
