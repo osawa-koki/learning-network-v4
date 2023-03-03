@@ -21,8 +21,10 @@ jobs:
         id: check
         run: yarn outdated
         continue-on-error: true
+      - name: Check result
+        run: echo ${{ steps.check.outputs.stdout }}
       - name: Post to Slack
-        if: ${{ steps.check.conclusion == 'failure' }}
+        #if: ${{ steps.check.conclusion == 'failure' }}
         uses: 8398a7/action-slack@v3
         with:
           status: 'warning'
