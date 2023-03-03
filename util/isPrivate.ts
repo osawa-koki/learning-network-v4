@@ -13,19 +13,15 @@ function isPrivate(ipAddress: string): 'public' | 'private-A' | 'private-B' | 'p
   if (isValidIPv4(ipAddress) === false) {
     return null;
   }
-
   if (first === 10) {
     return 'private-A';
   }
-
   if (first === 172 && second >= 16 && second <= 31) {
     return 'private-B';
   }
-
   if (first === 192 && second === 168) {
     return 'private-C';
   }
-
   return 'public';
 }
 
