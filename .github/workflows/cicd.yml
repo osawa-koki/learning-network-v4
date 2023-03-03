@@ -116,8 +116,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # ★ 機密情報を扱う際にOutputsを使用すると空文字になるため、二度手間になってしまう。
-      - uses: actions/setup-python@v3
-      - uses: aws-actions/setup-sam@v2
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
