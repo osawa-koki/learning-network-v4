@@ -26,7 +26,6 @@ jobs:
         uses: 8398a7/action-slack@v3
         with:
           status: 'failure'
-          # 標準出力を取得して、Slackに投稿する
           text: |
             Deprecated packages found!
             -> ${{ env.project_name }}
