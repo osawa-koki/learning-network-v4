@@ -5,6 +5,9 @@ on:
     branches:
       - develop
 
+env:
+  project_name: learning-network-v4
+
 jobs:
   check-deprecated:
     runs-on: ubuntu-latest
