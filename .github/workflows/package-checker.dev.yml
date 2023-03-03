@@ -25,8 +25,11 @@ jobs:
           status: 'failure'
           # 標準出力を取得して、Slackに投稿する
           text: |
-            "Deprecated packages found!"
-            ${{ steps.check.outputs.stdout }} ${{ steps.check.outputs.stderr }}
+            Deprecated packages found!
+            ```
+            ${{ steps.check.outputs.stderr }}
+            ${{ steps.check.outputs.stdout }}
+            ```
           channel: '#alert'
           username: 'Github Actions'
         env:
