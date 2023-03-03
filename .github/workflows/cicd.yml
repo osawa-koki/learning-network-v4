@@ -86,23 +86,14 @@ jobs:
             echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
-      - id: api-gateway-output
-        run: echo "url=https://xxxxxxxxxx.execute-api.zzzzzzzzzz.amazonaws.com/Prod" >> "$GITHUB_OUTPUT"
-    outputs:
-      api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
+    #   - id: api-gateway-output
+    #     run: echo "url=https://xxxxxxxxxx.execute-api.zzzzzzzzzz.amazonaws.com/Prod" >> "$GITHUB_OUTPUT"
+    # outputs:
+    #   api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
   nextjs-test:
     needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
-      - name: API Gateway URL empty guard
-        env:
-          api-gateway-url: ${{ needs.lambda-deploy.outputs.api-gateway-url }}
-        run: |
-          echo "API Gateway URL -> ${{ env.api-gateway-url }}"
-          if [ -z "${{ env.api-gateway-url }}" ]; then
-            echo "API Gateway URL is empty"
-            exit 1
-          fi
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node
@@ -124,12 +115,21 @@ jobs:
     if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: API Gateway URL empty guard
-        env:
-          api-gateway-url: ${{ needs.lambda-deploy.outputs.api-gateway-url }}
+      - name: Get API Gateway URL
         run: |
-          echo "API Gateway URL -> ${{ env.api-gateway-url }}"
-          if [ -z "${{ env.api-gateway-url }}" ]; then
+          API_GATEWAY_URL=$(aws cloudformation describe-stacks --stack-name ${{ env.project_name }} --query "Stacks[0].Outputs[?OutputKey=='YourInfoApi'].OutputValue" --output text --no-cli-pager)
+          echo "API_GATEWAY_URL=$API_GATEWAY_URL" >> $GITHUB_ENV
+      - name: API Gateway URL empty guard
+        run: |
+          echo "API Gateway URL -> ${{ env.API_GATEWAY_URL }}"
+          if [ -z "${{ env.API_GATEWAY_URL }}" ]; then
+            echo "API Gateway URL is empty"
+            exit 1
+          fi
+      - name: API Gateway URL empty guard
+        run: |
+          echo "API Gateway URL -> ${{ env.API_GATEWAY_URL }}"
+          if [ -z "${{ env.API_GATEWAY_URL }}" ]; then
             echo "API Gateway URL is empty"
             exit 1
           fi
@@ -165,27 +165,27 @@ jobs:
       #     echo "${{ secrets.ENV_LOCAL }}" > .env.local
       - name: Show API Gateway URL
         env:
-          api-gateway-url: ${{ needs.lambda-deploy.outputs.api-gateway-url }}
+          api-gateway-url: ${{ env.API_GATEWAY_URL }}
         run: |
           echo "API Gateway URL -> ${{ env.api-gateway-url }}"
       - name: Check status code of curl response
         env:
-          api-gateway-url: ${{ needs.lambda-deploy.outputs.api-gateway-url }}
+          api-gateway-url: ${{ env.API_GATEWAY_URL }}
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" "${{ env.api-gateway-url }}/your-info")
+          response=$(curl -s -o /dev/null -w "%{http_code}" " ${{ env.API_GATEWAY_URL }}/your-info")
           if [ $response -eq 200 ]; then
             echo "Success"
           else
             echo "Failed"
             echo "Response code: $response"
-            echo "API Gateway URL: ${{ env.api-gateway-url }}"
+            echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
       - name: Set API Gateway URL
         env:
-          api-gateway-url: ${{ needs.lambda-deploy.outputs.api-gateway-url }}
+          api-gateway-url: ${{ env.API_GATEWAY_URL }}
         run: |
-          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.api-gateway-url }}$\n" >> .env.local
+          echo "NEXT_PUBLIC_LAMBDA_API_URL= ${{ env.API_GATEWAY_URL }}$\n" >> .env.local
       - name: Cat .env.local
         run: |
           cat .env.local
