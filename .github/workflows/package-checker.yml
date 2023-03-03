@@ -27,10 +27,11 @@ jobs:
         #if: ${{ steps.check.conclusion == 'failure' }}
         uses: 8398a7/action-slack@v3
         with:
-          status: 'warning'
+          status: 'failure'
           text: |
-            {{ steps.check.outputs.stdout }}
-          channel: '#general'
+            "Deprecated packages found!"
+          channel: '#alert'
           username: 'Github Actions'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
