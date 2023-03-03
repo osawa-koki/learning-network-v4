@@ -3,13 +3,23 @@ import isValidIPv4 from "./isValidIPv4";
 /**
  * プライベートIPアドレスかどうかを判定する
  * @param ipAddress IPアドレス
- * @returns プライベートIPアドレスの場合は、'private-A' | 'private-B' | 'private-C'、それ以外は'public'を返す。不正なIPアドレスの場合はnullを返す。
+ * @returns プライベートIPアドレスの場合は、プライベートIPアドレスの種類を返す。それ以外の場合は、適切な値を返す。
  */
-function isPrivate(ipAddress: string): 'public' | 'private-A' | 'private-B' | 'private-C' | null {
+function isPrivate(ipAddress: string): 'private-A' | 'private-B' | 'private-C' | 'public' | 'special' | null {
   const ipArray = ipAddress.split(".");
   const first = parseInt(ipArray[0], 10);
   const second = parseInt(ipArray[1], 10);
 
+  const specialIPs = [
+    '127.0.0.1',
+    '192.0.2.0',
+    '0.0.0.0',
+    '255.255.255.255',
+  ];
+
+  if (specialIPs.includes(ipAddress)) {
+    return 'special';
+  }
   if (isValidIPv4(ipAddress) === false) {
     return null;
   }
