@@ -20,6 +20,7 @@ jobs:
       - name: Check for deprecated packages
         id: check
         run: yarn outdated
+        continue-on-error: true
       - name: Post to Slack
         if: ${{ steps.check.outcome == 'failure' }}
         uses: 8398a7/action-slack@v3
