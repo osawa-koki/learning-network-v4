@@ -91,7 +91,6 @@ jobs:
     # outputs:
     #   api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
   nextjs-test:
-    needs: lambda-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
