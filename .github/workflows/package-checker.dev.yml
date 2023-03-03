@@ -26,10 +26,7 @@ jobs:
           # 標準出力を取得して、Slackに投稿する
           text: |
             Deprecated packages found!
-            ```
-            ${{ steps.check.outputs.stderr }}
-            ${{ steps.check.outputs.stdout }}
-            ```
+            -> ${{ env.project_name }}
           channel: '#alert'
           username: 'Github Actions'
         env:
