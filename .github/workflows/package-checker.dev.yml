@@ -32,4 +32,5 @@ jobs:
           username: 'Github Actions'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: ${{ steps.check.outputs.exitcode != 0 }}
+        if: ${{ always() && steps.check.outcome != 'success' }}
+
