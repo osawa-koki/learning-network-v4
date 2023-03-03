@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@splidejs/splide/css';
 
 import '../styles/styles.scss';
 import '../styles/menu.scss';
