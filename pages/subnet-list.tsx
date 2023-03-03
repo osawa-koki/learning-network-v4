@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import getSubnetMask from "../util/getSubnetMask";
 import getIPAddressBits from "../util/getIPAddressBits";
 
-const prefixes = Array.from(Array(32), (_, i) => i);
+const prefixes = Array.from(Array(32), (_, i) => i + 1);
 
 export default function SubnetListPage() {
 

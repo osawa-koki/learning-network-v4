@@ -62,16 +62,17 @@ export default function FortunePage() {
   return (
     <Layout>
       <div id="SpecialIP">
-        <h1>SpecialIP</h1>
+        <h1>Special IP</h1>
+        <p className="mt-3">特殊なIPアドレス！</p>
         <Splide
-          className="mt-5 w-100"
+          className="mt-3 w-100"
           options={{
             autoplay: true,
             interval: 3000,
             rewind: true,
             pauseOnHover: true,
             pauseOnFocus: true,
-            arrows: true,
+            arrows: false,
             type: 'loop',
           }}
         >
