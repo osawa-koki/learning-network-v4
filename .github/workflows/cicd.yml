@@ -87,7 +87,7 @@ jobs:
             exit 1
           fi
       - id: step1
-        run: echo "test=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
+        run: echo "test=helloworld" >> "$GITHUB_OUTPUT"
     outputs:
       output1: ${{ steps.step1.outputs.test }}
   nextjs-test:
