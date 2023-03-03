@@ -21,8 +21,6 @@ jobs:
         working-directory: ${{ env.app_dir }}
       - run: npm run test
         working-directory: ${{ env.app_dir }}
-    outputs:
-      test-status: ${{ job.status }}
   nextjs-test:
     runs-on: ubuntu-latest
     steps:
@@ -37,5 +35,3 @@ jobs:
         run: yarn
       - name: Test
         run: yarn test
-    outputs:
-      test-status: ${{ job.status }}
