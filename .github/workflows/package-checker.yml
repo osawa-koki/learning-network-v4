@@ -1,0 +1,30 @@
+name: Check for Deprecated Packages
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # 4回実行する。1回あたり4時間おきに実行。
+
+jobs:
+  check-deprecated:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Check for deprecated packages
+        run: yarn outdated --json | jq -c '.data[] | select(.type == "table") | .data[] | select(.[3] == "deprecated")'
+        id: check
+      - name: Post to Slack
+        if: steps.check.outputs.stdout != ''
+        uses: 8398a7/action-slack@v4
+        with:
+          status: 'warning'
+          text: |
+            {{ steps.check.outputs.stdout }}
+          channel: '#general'
+          username: 'Github Actions'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
