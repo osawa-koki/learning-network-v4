@@ -30,6 +30,11 @@ const pages = [
     path: "/special-ip/",
     name: "Special IP",
   },
+  {
+    emoji: "🔒",
+    path: "/is-private/",
+    name: "Is Private?",
+  },
 ];
 
 export default pages;
