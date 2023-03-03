@@ -16,9 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get -y install jq
       - name: Check for deprecated packages
-        run: yarn outdated --json | jq -c '.data[] | select(.type == "table") | .data[] | select(.[3] == "deprecated")'
+        run: yarn outdated --json --long | jq -c '.[] | select(.type == "table") | .data[] | select(.[5] == "deprecated")'
         id: check
       - name: Post to Slack
         if: steps.check.outputs.stdout != ''
