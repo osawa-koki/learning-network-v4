@@ -22,7 +22,7 @@ jobs:
         run: yarn outdated
         continue-on-error: true
       - name: Post to Slack
-        if: ${{ steps.check.outcome == 'failure' }}
+        if: ${{ steps.check.conclusion == 'failure' }}
         uses: 8398a7/action-slack@v3
         with:
           status: 'warning'
