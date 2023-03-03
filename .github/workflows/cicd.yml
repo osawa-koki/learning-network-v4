@@ -87,7 +87,7 @@ jobs:
             exit 1
           fi
       - id: api-gateway-output
-        run: echo "url=httpsxxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.comProd" >> "$GITHUB_OUTPUT"
+        run: echo "url=https://xxxxxxxxxx.execute-api.hello-world.amazonaws.com/Prod" >> "$GITHUB_OUTPUT"
     outputs:
       api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
   nextjs-test:
