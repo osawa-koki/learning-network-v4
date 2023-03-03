@@ -195,6 +195,11 @@ jobs:
           api-gateway-url: ${{ env.API_GATEWAY_URL }}
         run: |
           echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.API_GATEWAY_URL }}" >> .env.local
+      - name: My Debug
+        env:
+          api-gateway-url: ${{ env.API_GATEWAY_URL }}
+        run: |
+          echo "NEXT_PUBLIC_LAMBDA_API_URL=${{ env.API_GATEWAY_URL }}" >> ./public/env.txt
       - name: Cat .env.local
         run: |
           cat .env.local
