@@ -86,11 +86,12 @@ jobs:
             echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
-      - name: Keep API Gateway URL
-        id: api-gateway-output
-        run: echo "url=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
-    outputs:
-      api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
+    # Outputsで機密情報を扱うことはできない？
+      # - name: Keep API Gateway URL
+      #   id: api-gateway-output
+      #   run: echo "url=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
+    # outputs:
+    #   api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
   nextjs-test:
     runs-on: ubuntu-latest
     steps:
@@ -115,13 +116,13 @@ jobs:
     if: ${{ needs.nextjs-test.outputs.test-status == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      # ★ 機密情報を扱う際にOutputsを使用すると空文字になるため、二度手間になってしまう。
+      # ★ 機密情報を扱う際にOutputsを使用すると空文字になるため、二度手間になってしまうが、、、
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      # ★ 機密情報を扱う際にOutputsを使用すると空文字になるため、二度手間になってしまう。
+      # ★ 機密情報を扱う際にOutputsを使用すると空文字になるため、二度手間になってしまうが、、、
       - name: Get API Gateway URL
         run: |
           API_GATEWAY_URL=$(aws cloudformation describe-stacks --stack-name ${{ env.project_name }} --query "Stacks[0].Outputs[?OutputKey=='YourInfoApi'].OutputValue" --output text --no-cli-pager)
