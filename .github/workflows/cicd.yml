@@ -86,11 +86,12 @@ jobs:
             echo "API Gateway URL: ${{ env.API_GATEWAY_URL }}"
             exit 1
           fi
-      - name: Keep API Gateway URL
-        id: api-gateway-output
-        run: echo "url=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
-    outputs:
-      api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
+    # Outputsで機密情報を扱うことはできない？
+      # - name: Keep API Gateway URL
+      #   id: api-gateway-output
+      #   run: echo "url=${{ env.API_GATEWAY_URL }}" >> "$GITHUB_OUTPUT"
+    # outputs:
+    #   api-gateway-url: ${{ steps.api-gateway-output.outputs.url }}
   nextjs-test:
     runs-on: ubuntu-latest
     steps:
